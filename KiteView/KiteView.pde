@@ -13,10 +13,18 @@ import processing.video.*;
 import com.hamoid.*; // VideoExport library
 import gab.opencv.*;
 import java.awt.Rectangle;
+import controlP5.*;
+import processing.serial.*;
+import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
+static final boolean DEBUG = false;
 
 Capture cam;
 VideoExport sketchExport;
 VideoExport camExport;
+ControlP5 cp5;
 
 
 OpenCV opencv;
@@ -61,11 +69,24 @@ int kite_h = 0;
 int[] status_leds = {0, 0, 0, 0};
 
 
+PFont font_lg;
+PFont font_md;
+PFont font_sm;
+
+
 void setup() {
   
   size(1280, 750);//, P2D); // P2D offloads some rendering to opengl, however in this sketch it makes it glitchy
   //frameRate(60);
   //noSmooth();
+  
+  font_lg = loadFont("LucidaSans-48.vlw");
+  font_md = loadFont("LucidaSans-24.vlw");
+  font_sm = loadFont("LucidaSans-16.vlw");
+  
+  textFont(font_sm, 16);
+  cp5 = new ControlP5(this);
+  guiSetup();
 
   String[] cameras = Capture.list();
   
@@ -138,20 +159,20 @@ void draw() {
   
   
   fill(255);
-  textSize(32);
+  textFont(font_lg, 48);
   text("KiteView", 20, 60);
-  text(frameRate, 20, height-20);
+  text(frameRate, 5, height-20);
   if(recording) {
-    textSize(18);
+    textFont(font_md, 24);
     text("recording", 20, 90);  
   } else {
-    textSize(18);
+    textFont(font_md, 24);
     text("not recording", 20, 90);
   }
   
   String str = "";
   float px = 0.0;
-  textSize(12);
+  textFont(font_sm, 16);
   
   str = ("kite x: " + kite_x + " px (" + nf(px, 0, 2) + "%)");
   text(str, 20, 120);
@@ -165,8 +186,11 @@ void draw() {
   str = ("kite h: " + kite_h + " px (" + nf(px, 0, 2) + "%)");
   text(str, 20, 180);
   
-  str = ("hold 1,2,3 and click mouse to select that hue");
+  str = ("hold 1,2,3 and click to select hue");
   text(str, 20, 200);
+  
+  str = ("z,x,c,v to simulate leds");
+  text(str, 20, 220);
   
   
   
@@ -209,42 +233,6 @@ void draw() {
   
 }
 
-
-void drawStatusLeds() {
- 
-  // red
-  if(status_leds[0] == 0) {
-    fill(255, 0, 0, 50); 
-  } else if(status_leds[0] == 1) {
-    fill(255, 0, 0, 255);
-  }
-  ellipse(60, 300, 30, 30);
-  
-  // green
-  if(status_leds[1] == 0) {
-    fill(0, 255, 0, 50); 
-  } else if(status_leds[1] == 1) {
-    fill(0, 255, 0, 255);
-  }
-  ellipse(60+50, 300, 30, 30);
-  
-  // blue
-  if(status_leds[2] == 0) {
-    fill(0, 0, 255, 50); 
-  } else if(status_leds[2] == 1) {
-    fill(0, 0, 255, 255);
-  }
-  ellipse(60+50+50, 300, 30, 30);
-  
-  // yellow
-  if(status_leds[3] == 0) {
-    fill(128, 128, 0, 50); 
-  } else if(status_leds[3] == 1) {
-    fill(128, 128, 0, 255);
-  }
-  ellipse(60+50+50+50, 300, 30, 30);
-  
-}
 
 
 
@@ -296,6 +284,16 @@ void keyPressed() {
     colorToChange = 3;
   }
   
+  
+  if(key == 'z') {
+    toggleStatusLed(0);
+  } else if(key == 'x') {
+    toggleStatusLed(1);
+  } else if(key == 'c') {
+    toggleStatusLed(2);
+  } else if(key == 'v') {
+    toggleStatusLed(3);
+  }
   
 }
 
@@ -371,7 +369,7 @@ void displayContoursBoundingBoxes() {
     if (r.width < 60 || r.height < 60)
       continue;
     
-    println("1 [" + i + "]: " + r);
+    //println("1 [" + i + "]: " + r);
     color c = colors[0];
     color c_new = color(red(c), green(c), blue(c), 100);
     stroke(255, 255, 255, 100);
@@ -398,7 +396,7 @@ void displayContoursBoundingBoxes() {
     if (r.width < 60 || r.height < 60)
       continue;
     
-    println("2 [" + i + "]: " + r);
+    //println("2 [" + i + "]: " + r);
     color c = colors[1];
     color c_new = color(red(c), green(c), blue(c), 100);
     stroke(255, 255, 255, 100);
@@ -417,7 +415,7 @@ void displayContoursBoundingBoxes() {
     if (r.width < 60 || r.height < 60)
       continue;
     
-    println("3 [" + i + "]: " + r);
+    //println("3 [" + i + "]: " + r);
     color c = colors[2];
     color c_new = color(red(c), green(c), blue(c), 100);
     stroke(255, 255, 255, 100);
