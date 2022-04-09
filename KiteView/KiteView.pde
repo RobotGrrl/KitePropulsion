@@ -45,7 +45,7 @@ PImage[] outputs;
 int colorToChange = -1;
 
 
-boolean recording = false;
+boolean recording = true; // why does this have to be backwards
 // 648x486
 // 1296x972
 //int cam_w = 648;
@@ -72,6 +72,7 @@ int[] status_leds = {0, 0, 0, 0};
 PFont font_lg;
 PFont font_md;
 PFont font_sm;
+
 
 
 void setup() {
@@ -113,6 +114,8 @@ void setup() {
   
   sketchExport = new VideoExport(this);
   camExport = new VideoExport(this, "camera.mp4", cam);
+  
+  sketchExport.setFrameRate(5);
   
   
   // set up opencv
@@ -162,27 +165,31 @@ void draw() {
   textFont(font_lg, 48);
   text("KiteView", 20, 60);
   text(frameRate, 5, height-20);
-  if(recording) {
+  if(connected) {
     textFont(font_md, 24);
-    text("recording", 20, 90);  
+    text("connected", 20, 90);  
   } else {
     textFont(font_md, 24);
-    text("not recording", 20, 90);
+    text("not connected", 20, 90);
   }
   
   String str = "";
   float px = 0.0;
   textFont(font_sm, 16);
   
+  px = ( (float)(kite_x-cam_x) / (float)cam_w )*100;
   str = ("kite x: " + kite_x + " px (" + nf(px, 0, 2) + "%)");
   text(str, 20, 120);
 
+  px = ( (float)(kite_y-cam_y) / (float)cam_h )*100;
   str = ("kite y: " + kite_y + " px (" + nf(px, 0, 2) + "%)");
   text(str, 20, 140);
   
+  px = ( (float)kite_w / (float)cam_w)*100.0;
   str = ("kite w: " + kite_w + " px (" + nf(px, 0, 2) + "%)");
   text(str, 20, 160);
   
+  px = ( (float)kite_h / (float)cam_h )*100.0;
   str = ("kite h: " + kite_h + " px (" + nf(px, 0, 2) + "%)");
   text(str, 20, 180);
   

@@ -5,22 +5,6 @@ void guiSetup() {
   int start_y = 320;
   int sp = 50;
   
-  List l = new ArrayList();
-  
-  for(int i=0; i<Serial.list().length; i++) {
-    if(DEBUG) println(Serial.list()[i]);
-    l.add("" + Serial.list()[i]);
-  }
-  
-  /* add a ScrollableList, by default it behaves like a DropdownList */
-  cp5.addScrollableList("dropdown")
-     .setPosition(start_x, start_y)
-     .setSize(200, 100)
-     .setBarHeight(40)
-     .setItemHeight(40)
-     .addItems(l)
-     // .setType(ScrollableList.LIST) // currently supported DROPDOWN and LIST
-     ;
   
   cp5.addButton("connectButton")
      .setValue(0)
@@ -46,6 +30,36 @@ void guiSetup() {
      .setLabel("Zero Positions");
      ;
   
+  cp5.addButton("recordButton")
+     .setValue(0)
+     .setPosition(20,start_y+(sp*4))
+     .setSize(200,40)
+     .setFont(font_sm)
+     .setLabel("Start Recording");
+     ;
+  
+  
+  List l = new ArrayList();
+  
+  for(int i=0; i<Serial.list().length; i++) {
+    if(DEBUG) println(Serial.list()[i]);
+    l.add("" + Serial.list()[i]);
+  }
+  
+  /* add a ScrollableList, by default it behaves like a DropdownList */
+  cp5.addScrollableList("dropdown")
+     .setPosition(start_x, start_y)
+     .setSize(200, 300)
+     .setBarHeight(40)
+     .setItemHeight(40)
+     .addItems(l)
+     .setFont(font_sm)
+     .setLabel("Ports")
+     .setOpen(false)
+     // .setType(ScrollableList.LIST) // currently supported DROPDOWN and LIST
+     ;
+  
+  
 }
 
 
@@ -65,6 +79,17 @@ public void testButton(int theValue) {
 
 public void zeroButton(int theValue) {
   println("a button event from zeroButton: "+theValue);
+}
+
+public void recordButton(int theValue) {
+  println("a button event from recordButton: "+theValue);
+  
+  if(recording == false) {
+    startRecording();
+  } else {
+    stopRecording();
+  }
+  
 }
 
 void dropdown(int n) {

@@ -9,11 +9,19 @@ void startRecording() {
   sketchExport.startMovie();
   //camExport.setMovieFileName(fn + "-camera.mp4");
   //camExport.startMovie();
+  
+  cp5.getController("recordButton")
+     .setLabel("Stop Recording");
+  
 }
 
 void stopRecording() {
   recording = false;
   println("stopping recording");
   sketchExport.endMovie();
-  camExport.endMovie();
+  //camExport.endMovie();
+  
+  cp5.getController("recordButton")
+     .setLabel("Start Recording");
+     
 }
