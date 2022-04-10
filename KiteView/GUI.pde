@@ -38,6 +38,17 @@ void guiSetup() {
      .setLabel("Start Recording");
      ;
   
+  cp5.addButton("traceButton")
+     .setValue(0)
+     .setPosition(20,start_y+(sp*5))
+     .setSize(200,40)
+     .setFont(font_sm)
+     .setLabel("Start Trace");
+     ;
+  
+  
+  
+  
   
   List l = new ArrayList();
   
@@ -58,6 +69,59 @@ void guiSetup() {
      .setOpen(false)
      // .setType(ScrollableList.LIST) // currently supported DROPDOWN and LIST
      ;
+  
+  
+  
+  
+  int hehehe = 275-30;
+  
+  cp5.addSlider("sliderPitch")
+     .setPosition(hehehe,530+10)
+     .setWidth(200)
+     .setHeight(20)
+     .setRange(-100,100) // values can range from big to small as well
+     .setValue(0)
+     .setNumberOfTickMarks(10+1)
+     .setSliderMode(Slider.FLEXIBLE)
+     .setFont(font_sm)
+     .setLabel("");
+     ;
+  
+  cp5.getController("sliderPitch").getValueLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0).setPaddingY(10);
+  
+  cp5.addButton("pitchlockButton")
+     .setValue(0)
+     .setPosition(hehehe,600)
+     .setSize(200,40)
+     .setFont(font_sm)
+     .setLabel("Lock");
+     ;
+  
+  cp5.addButton("pitchhomeButton")
+     .setValue(0)
+     .setPosition(hehehe,600+(sp*1))
+     .setSize(200,40)
+     .setFont(font_sm)
+     .setLabel("Home");
+     ;
+  
+  cp5.addButton("pitchaddButton")
+     .setValue(0)
+     .setPosition(hehehe,600+(sp*2))
+     .setSize(90,40)
+     .setFont(font_sm)
+     .setLabel("+ 10");
+     ;
+  
+  cp5.addButton("pitchsubButton")
+     .setValue(0)
+     .setPosition(hehehe+110,600+(sp*2))
+     .setSize(90,40)
+     .setFont(font_sm)
+     .setLabel("- 10");
+     ;
+  
+  
   
   
 }
@@ -84,11 +148,27 @@ public void zeroButton(int theValue) {
 public void recordButton(int theValue) {
   println("a button event from recordButton: "+theValue);
   
-  if(recording == false) {
-    startRecording();
-  } else {
+  if(recording) {
     stopRecording();
+  } else {
+    startRecording();
   }
+  
+}
+
+public void traceButton(int theValue) {
+  println("a button event from traceButton: "+theValue);
+  
+  if(!trace) {
+    cp5.getController("traceButton")
+     .setLabel("Stop Trace");
+    resetTracePoints();
+  } else {
+    cp5.getController("traceButton")
+     .setLabel("Start Trace");
+  }
+  
+  trace = !trace;
   
 }
 

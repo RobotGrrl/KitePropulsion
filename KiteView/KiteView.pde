@@ -21,6 +21,8 @@ import java.util.List;
 
 static final boolean DEBUG = false;
 
+static boolean CAMERA_ENABLED = true;
+
 Capture cam;
 VideoExport sketchExport;
 VideoExport camExport;
@@ -45,7 +47,7 @@ PImage[] outputs;
 int colorToChange = -1;
 
 
-boolean recording = true; // why does this have to be backwards
+boolean recording = false;
 // 648x486
 // 1296x972
 //int cam_w = 648;
@@ -74,6 +76,12 @@ PFont font_md;
 PFont font_sm;
 
 
+boolean trace = false;
+final int TRACE_MAX = 50;
+int[] trace_x = new int[TRACE_MAX];
+int[] trace_y = new int[TRACE_MAX];
+
+
 
 void setup() {
   
@@ -87,48 +95,57 @@ void setup() {
   
   textFont(font_sm, 16);
   cp5 = new ControlP5(this);
+  cp5.setAutoDraw(false);
   guiSetup();
 
-  String[] cameras = Capture.list();
-  
-  if (cameras.length == 0) {
-    println("There are no cameras available for capture.");
-    exit();
-  } else {
-    println("Available cameras:");
-    for (int i = 0; i < cameras.length; i++) {
-      print("[" + i + "] ");
-      println(cameras[i]);
+  if(CAMERA_ENABLED) {
+    
+    String[] cameras = Capture.list();
+    
+    if (cameras.length == 0) {
+      println("There are no cameras available for capture.");
+      exit();
+    } else {
+      println("Available cameras:");
+      for (int i = 0; i < cameras.length; i++) {
+        print("[" + i + "] ");
+        println(cameras[i]);
+      }
+      
+      // The camera can be initialized directly using an 
+      // element from the array returned by list():
+      // 6: 648x486
+      // 3: 1296x972
+      //cam = new Capture(this, 648, 486, cameras[8]);
+      
+      cam = new Capture(this, 1296, 972, cameras[3]);
+      cam.start();
     }
     
-    // The camera can be initialized directly using an 
-    // element from the array returned by list():
-    // 6: 648x486
-    // 3: 1296x972
-    //cam = new Capture(this, 648, 486, cameras[8]);
-    cam = new Capture(this, 1296, 972, cameras[3]);
-    cam.start();     
   }
   
-  imageMode(CENTER);
+  //imageMode(CENTER); // why was this here?
   
   sketchExport = new VideoExport(this);
-  camExport = new VideoExport(this, "camera.mp4", cam);
+  //camExport = new VideoExport(this, "camera.mp4", cam);
   
   sketchExport.setFrameRate(5);
   
+  if(CAMERA_ENABLED) {
+    // set up opencv
+    opencv = new OpenCV(this, cam.width, cam.height);
+    contours_1 = new ArrayList<Contour>();
+    contours_2 = new ArrayList<Contour>();
+    contours_3 = new ArrayList<Contour>();
+    
+    // Array for detection colors
+    colors = new int[maxColors];
+    hues = new int[maxColors];
+    
+    outputs = new PImage[maxColors];
+  }
   
-  // set up opencv
-  opencv = new OpenCV(this, cam.width, cam.height);
-  contours_1 = new ArrayList<Contour>();
-  contours_2 = new ArrayList<Contour>();
-  contours_3 = new ArrayList<Contour>();
-  
-  // Array for detection colors
-  colors = new int[maxColors];
-  hues = new int[maxColors];
-  
-  outputs = new PImage[maxColors];
+  resetTracePoints();
   
   imageMode(CORNER);
   
@@ -138,26 +155,50 @@ void draw() {
   
   background(50);
   
-  if (cam.available() == true) {
-    cam.read();
-  } else {
-    return; 
+  cp5.draw();
+  
+  
+  if(CAMERA_ENABLED) {
+    
+    if (cam.available() == true) {
+      cam.read();
+    } else {
+      return; 
+    }
+  
+    image(cam, cam_x, cam_y, cam_w_scaled, cam_h_scaled);
+    
+    // <2> Load the new frame of our movie in to OpenCV
+    opencv.loadImage(cam);
+    
+    // Tell OpenCV to use color information
+    opencv.useColor();
+    src = opencv.getSnapshot();
+    
+    // <3> Tell OpenCV to work in HSV color space.
+    opencv.useColor(HSB);
+    
+    detectColors();
+    
+    
+    
+    // Show images
+    int scaley = 5;
+    for (int i=0; i<outputs.length; i++) {
+      if (outputs[i] != null) {
+        image(outputs[i], cam_x+cam_w_scaled+40, i*src.height/scaley+((i+1)*10), src.width/scaley, src.height/scaley);
+        noStroke();
+        fill(colors[i]);
+        rect(cam_x+cam_w_scaled+10, i*src.height/scaley+((i+1)*10), 30, src.height/scaley);
+      }
+    }
+    
+    
+    displayContoursBoundingBoxes();
+    
+    
+    
   }
-  
-  
-  
-  // <2> Load the new frame of our movie in to OpenCV
-  opencv.loadImage(cam);
-  
-  // Tell OpenCV to use color information
-  opencv.useColor();
-  src = opencv.getSnapshot();
-  
-  // <3> Tell OpenCV to work in HSV color space.
-  opencv.useColor(HSB);
-  
-  detectColors();
-  
   
   
   
@@ -201,9 +242,6 @@ void draw() {
   
   
   
-  image(cam, cam_x, cam_y, cam_w_scaled, cam_h_scaled);
-  
-  
   
   
   // show the colour bigger
@@ -213,19 +251,34 @@ void draw() {
   stroke(1);
   
   
-  // Show images
-  int scaley = 5;
-  for (int i=0; i<outputs.length; i++) {
-    if (outputs[i] != null) {
-      image(outputs[i], cam_x+cam_w_scaled+40, i*src.height/scaley+((i+1)*10), src.width/scaley, src.height/scaley);
-      noStroke();
-      fill(colors[i]);
-      rect(cam_x+cam_w_scaled+10, i*src.height/scaley+((i+1)*10), 30, src.height/scaley);
+  
+  
+  int hehehe = 275;
+  fill(255);
+  textFont(font_md, 24);
+  text("Pitch", hehehe, 525);
+  
+  fill(255);
+  textFont(font_md, 24);
+  text("Yaw", hehehe+250, 525);
+  
+  fill(255);
+  textFont(font_md, 24);
+  text("Reel", hehehe+250+250, 525);
+  
+  
+  
+  if(trace) {
+    for(int i=0; i<TRACE_MAX; i++) {
+      if(trace_x[i] == -1 || trace_y[i] == -1) {
+        continue;
+      }
+      fill(144, 96, 214);
+      ellipse(trace_x[i], trace_y[i], 15, 15);
+      if(i>0) line(trace_x[i], trace_y[i], trace_x[i-1], trace_y[i-1]);
     }
   }
   
-  
-  displayContoursBoundingBoxes();
   
   
   drawStatusLeds();
@@ -233,7 +286,7 @@ void draw() {
   
   if(recording) {
     sketchExport.saveFrame();
-    camExport.saveFrame();
+    //camExport.saveFrame();
   }
   
   //println(mouseX + ", " + mouseY);
@@ -241,6 +294,11 @@ void draw() {
 }
 
 
+
+
+void slider(float theColor) {
+  println("a slider event");
+}
 
 
 
@@ -306,6 +364,30 @@ void keyPressed() {
 
 void keyReleased() {
   colorToChange = -1; 
+}
+
+
+
+
+void addTracePoint(int x, int y) {
+  
+  if(!trace) return;
+  
+  for(int i=TRACE_MAX-1; i>0; i--) {
+    trace_x[i] = trace_x[i-1];
+    trace_y[i] = trace_y[i-1];
+  }
+  
+  trace_x[0] = x;
+  trace_y[0] = y;
+  
+}
+
+void resetTracePoints() {
+ for(int i=0; i<TRACE_MAX; i++) {
+   trace_x[i] = -1;
+   trace_y[i] = -1;
+ }
 }
 
 
@@ -389,6 +471,9 @@ void displayContoursBoundingBoxes() {
       kite_y = (int)(r.y*cam_scale+cam_y);
       kite_w = (int)(r.width*cam_scale);
       kite_h = (int)(r.height*cam_scale);
+      
+      addTracePoint(kite_x+(kite_w/2), kite_y+(kite_h/2));
+      
       kite_pos = true;
     }
     
