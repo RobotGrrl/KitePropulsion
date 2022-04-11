@@ -247,7 +247,7 @@ void draw() {
   
   
   // show the colour bigger
-  if(mouseX > cam_x && mouseX < (cam_x+cam_w) && mouseY > cam_y && mouseY < (cam_y+cam_h)) {
+  if(mouseX > cam_x && mouseX < (cam_x+cam_w_scaled) && mouseY > cam_y && mouseY < (cam_y+cam_h_scaled)) {
     noStroke();
     fill(get(mouseX, mouseY));
     rect(mouseX+4, mouseY+4, 40, 40);
@@ -381,6 +381,8 @@ void keyPressed() {
   
   if(key == 'p') {
     simulatePromulgate();
+  } else if(key == 'o') {
+    simulatePromulgateBig();
   }
   
 }

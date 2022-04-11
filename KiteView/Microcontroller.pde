@@ -44,7 +44,7 @@ void readData(char c) {
       return;
     }
     
-    if(msgIndex >= 20-1) {
+    if(msgIndex >= 11-1) {
       if(DEBUG) println("promulgate warning: index exceeded max message length");
       msgIndex = 0;
       msgLen = 0;
