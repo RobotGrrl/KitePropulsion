@@ -1,5 +1,5 @@
-// -- ARDUINO -- //
-Serial arduino;
+// -- device -- //
+Serial device;
 int port = 99;
 boolean connected = false;
 
@@ -10,57 +10,52 @@ char[] msg = new char[msgLen];
 boolean reading = false;
 boolean completed = false;
 int receivedValue = 0;
+long start_read = 0;
+final int MAX_READ_MS = 2000;
 
 
-void readData() {
- 
-  if(connected) {
-    // let's read the data
-    char c;
-    
-    while(arduino.available() > 0) {
-      
-      c = arduino.readChar();
-      
-      if(c == '~' || c == '@' || c == '#' || c == '^' || c == '&') {
-        reading = true;
-        completed = false; 
-      }
-      
-      if(reading) {
-        if(DEBUG) println("readChar(): " + c + " msgIndex: " + msgIndex);
-        
-        msg[msgIndex++] = c;
-      
-        if(c == '!' || c == '?' || c == ';') {
-          if(msgIndex >= 6-1) {
-            completed = true;
-          } else {
-            if(DEBUG) println("promulgate error: received delimeter before the message was long enough"); 
-          }
-        }
-        
-        if(completed == true) {
-          msgLen = msgIndex;
-          msgIndex = 0;
-          reading = false;
-          parse_message();
-          return;
-        }
-        
-        if(msgIndex >= 20-1) {
-          if(DEBUG) println("promulgate warning: index exceeded max message length");
-          msgIndex = 0;
-          msgLen = 0;
-        }
-    
-      }
-      
-    }
-    
-    
+
+void readData(char c) {
+  
+  if(c == '~' || c == '@' || c == '#' || c == '^' || c == '&') {
+    reading = true;
+    completed = false;
+    start_read = millis();
   }
   
+  if(reading) {
+    if(DEBUG) println("readChar(): " + c + " msgIndex: " + msgIndex);
+    
+    msg[msgIndex++] = c;
+  
+    if(c == '!' || c == '?' || c == ';') {
+      if(msgIndex >= 6-1) {
+        completed = true;
+      } else {
+        if(DEBUG) println("promulgate error: received delimeter before the message was long enough"); 
+      }
+    }
+    
+    if(completed == true) {
+      msgLen = msgIndex;
+      msgIndex = 0;
+      reading = false;
+      parse_message();
+      return;
+    }
+    
+    if(msgIndex >= 20-1) {
+      if(DEBUG) println("promulgate warning: index exceeded max message length");
+      msgIndex = 0;
+      msgLen = 0;
+    }
+    
+    if(millis()-start_read >= MAX_READ_MS) {
+      if(DEBUG) println("promulgate warning: read time exceeded max amount, stopping read");
+      return;
+    }
+
+  }
 }
 
 

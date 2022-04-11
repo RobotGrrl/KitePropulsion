@@ -1,6 +1,5 @@
 
-// this is where we parse the received info
-// from the Arduino!
+// this is where we action the received info from the device!
 void received_action(char action, char cmd, int key_msg, int val, char delim) {
   
   if(DEBUG) {
@@ -35,8 +34,19 @@ void transmit_action(char action, char cmd, int key_msg, int val, char delim) {
   String s = (action + "" + cmd + "" + key_msg + "," + val + "" + delim);
   println(s);
   if(connected) {
-    arduino.write(s);
+    device.write(s);
     transmit_complete();
+  }
+  
+}
+
+
+void simulatePromulgate() {
+  
+  if(DEBUG) println("simulating promulgate");
+  String test = "#L1,1003!";
+  for(int i=0; i<test.length(); i++) {
+    readData(test.charAt(i));
   }
   
 }

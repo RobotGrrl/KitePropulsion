@@ -47,9 +47,6 @@ void guiSetup() {
      ;
   
   
-  
-  
-  
   List l = new ArrayList();
   
   for(int i=0; i<Serial.list().length; i++) {
@@ -70,16 +67,23 @@ void guiSetup() {
      // .setType(ScrollableList.LIST) // currently supported DROPDOWN and LIST
      ;
   
+  pitchGui();
+  yawGui();
+  reelGui();
   
-  
-  
-  int hehehe = 275-30;
+}
+
+
+void pitchGui() {
+ 
+  int startx = 275-30;
+  int sp = 50;
   
   cp5.addSlider("sliderPitch")
-     .setPosition(hehehe,530+10)
+     .setPosition(startx,530+10)
      .setWidth(200)
      .setHeight(20)
-     .setRange(-100,100) // values can range from big to small as well
+     .setRange(-100,100)
      .setValue(0)
      .setNumberOfTickMarks(10+1)
      .setSliderMode(Slider.FLEXIBLE)
@@ -91,7 +95,7 @@ void guiSetup() {
   
   cp5.addButton("pitchlockButton")
      .setValue(0)
-     .setPosition(hehehe,600)
+     .setPosition(startx,600)
      .setSize(200,40)
      .setFont(font_sm)
      .setLabel("Lock");
@@ -99,7 +103,7 @@ void guiSetup() {
   
   cp5.addButton("pitchhomeButton")
      .setValue(0)
-     .setPosition(hehehe,600+(sp*1))
+     .setPosition(startx,600+(sp*1))
      .setSize(200,40)
      .setFont(font_sm)
      .setLabel("Home");
@@ -107,7 +111,7 @@ void guiSetup() {
   
   cp5.addButton("pitchaddButton")
      .setValue(0)
-     .setPosition(hehehe,600+(sp*2))
+     .setPosition(startx,600+(sp*2))
      .setSize(90,40)
      .setFont(font_sm)
      .setLabel("+ 10");
@@ -115,16 +119,139 @@ void guiSetup() {
   
   cp5.addButton("pitchsubButton")
      .setValue(0)
-     .setPosition(hehehe+110,600+(sp*2))
+     .setPosition(startx+110,600+(sp*2))
      .setSize(90,40)
      .setFont(font_sm)
      .setLabel("- 10");
      ;
   
+}
+
+void yawGui() {
+ 
+  int startx = 275+250-30;
+  int sp = 50;
   
+  cp5.addSlider("sliderYaw")
+     .setPosition(startx,530+10)
+     .setWidth(200)
+     .setHeight(20)
+     .setRange(-100,100)
+     .setValue(0)
+     .setNumberOfTickMarks(10+1)
+     .setSliderMode(Slider.FLEXIBLE)
+     .setFont(font_sm)
+     .setLabel("");
+     ;
   
+  cp5.getController("sliderYaw").getValueLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0).setPaddingY(10);
+  
+  cp5.addButton("yawlockButton")
+     .setValue(0)
+     .setPosition(startx,600)
+     .setSize(200,40)
+     .setFont(font_sm)
+     .setLabel("Lock");
+     ;
+  
+  cp5.addButton("yawhomeButton")
+     .setValue(0)
+     .setPosition(startx,600+(sp*1))
+     .setSize(200,40)
+     .setFont(font_sm)
+     .setLabel("Home");
+     ;
+  
+  cp5.addButton("yawaddButton")
+     .setValue(0)
+     .setPosition(startx,600+(sp*2))
+     .setSize(90,40)
+     .setFont(font_sm)
+     .setLabel("+ 10");
+     ;
+  
+  cp5.addButton("yawsubButton")
+     .setValue(0)
+     .setPosition(startx+110,600+(sp*2))
+     .setSize(90,40)
+     .setFont(font_sm)
+     .setLabel("- 10");
+     ;
   
 }
+
+void reelGui() {
+ 
+  int startx = 275+250+250-30;
+  int sp = 50;
+  
+  cp5.addSlider("sliderReel")
+     .setPosition(startx,530+10)
+     .setWidth(200)
+     .setHeight(20)
+     .setRange(-100,100)
+     .setValue(0)
+     .setNumberOfTickMarks(10+1)
+     .setSliderMode(Slider.FLEXIBLE)
+     .setFont(font_sm)
+     .setLabel("");
+     ;
+  
+  cp5.getController("sliderReel").getValueLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0).setPaddingY(10);
+  
+  cp5.addButton("reellockButton")
+     .setValue(0)
+     .setPosition(startx,600)
+     .setSize(200,40)
+     .setFont(font_sm)
+     .setLabel("Lock");
+     ;
+  
+  cp5.addButton("reelhomeButton")
+     .setValue(0)
+     .setPosition(startx,600+(sp*1))
+     .setSize(200,40)
+     .setFont(font_sm)
+     .setLabel("Home");
+     ;
+  
+  cp5.addButton("reeladdButton")
+     .setValue(0)
+     .setPosition(startx,600+(sp*2))
+     .setSize(90,40)
+     .setFont(font_sm)
+     .setLabel("+ 10");
+     ;
+  
+  cp5.addButton("reelsubButton")
+     .setValue(0)
+     .setPosition(startx+110,600+(sp*2))
+     .setSize(90,40)
+     .setFont(font_sm)
+     .setLabel("- 10");
+     ;
+  
+}
+
+
+String formatTimeStr() {
+  String str = "";
+  if(hour() < 10) {
+    str += "0";
+  }
+  str += hour() + ":";
+  if(minute() < 10) {
+    str += "0";
+  }
+  str += minute() + ":";
+  if(second() < 10) {
+    str += "0";
+  }
+  str += second() + ":" + millis();
+  
+  return str;
+}
+
 
 
 /*
@@ -134,18 +261,49 @@ public void controlEvent(ControlEvent theEvent) {
 */
 
 public void connectButton(int theValue) {
+  if(millis() < 5000) return; // weird cp5 behaviour
+  
   println("a button event from connectButton: "+theValue);
+  
+  if(!connected) {
+  
+    if(port != 99) {
+      println("connected");
+      connected = true;
+      device = new Serial(this, Serial.list()[port], 9600);
+      cp5.getController("connect").setCaptionLabel("Disconnect");
+    } else {
+      println("need to select a port!"); 
+    }
+  
+  } else {
+    
+    device.clear();
+    device.stop();
+    
+    cp5.getController("connect").setCaptionLabel("Connect");
+    //port = 99;
+    connected = false;
+    
+  }
+  
 }
 
 public void testButton(int theValue) {
+  if(millis() < 5000) return; // weird cp5 behaviour
+  
   println("a button event from testButton: "+theValue);
 }
 
 public void zeroButton(int theValue) {
+  if(millis() < 5000) return; // weird cp5 behaviour
+  
   println("a button event from zeroButton: "+theValue);
 }
 
 public void recordButton(int theValue) {
+  if(millis() < 5000) return; // weird cp5 behaviour
+  
   println("a button event from recordButton: "+theValue);
   
   if(recording) {
@@ -157,6 +315,8 @@ public void recordButton(int theValue) {
 }
 
 public void traceButton(int theValue) {
+  if(millis() < 5000) return; // weird cp5 behaviour
+  
   println("a button event from traceButton: "+theValue);
   
   if(!trace) {
@@ -241,33 +401,4 @@ void toggleStatusLed(int i) {
   } else if(status_leds[i] == 1) {
     status_leds[i] = 0; 
   }
-}
-
-
-
-
-void connect(int theValue) {
-  
-  if(!connected) {
-  
-    if(port != 99) {
-      println("connected");
-      connected = true;
-      arduino = new Serial(this, Serial.list()[port], 9600);
-      cp5.getController("connect").setCaptionLabel("Disconnect");
-    } else {
-      println("need to select a port!"); 
-    }
-  
-  } else {
-    
-    arduino.clear();
-    arduino.stop();
-    
-    cp5.getController("connect").setCaptionLabel("Connect");
-    //port = 99;
-    connected = false;
-    
-  }
-  
 }

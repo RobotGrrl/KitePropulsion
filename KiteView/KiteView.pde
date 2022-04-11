@@ -19,9 +19,9 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
-static final boolean DEBUG = false;
+static final boolean DEBUG = true;
 
-static boolean CAMERA_ENABLED = true;
+static boolean CAMERA_ENABLED = false;
 
 Capture cam;
 VideoExport sketchExport;
@@ -205,14 +205,16 @@ void draw() {
   fill(255);
   textFont(font_lg, 48);
   text("KiteView", 20, 60);
-  text(frameRate, 5, height-20);
+  textFont(font_md, 24);
+  
   if(connected) {
-    textFont(font_md, 24);
     text("connected", 20, 90);  
   } else {
-    textFont(font_md, 24);
     text("not connected", 20, 90);
   }
+  
+  text(formatTimeStr(), 20, height-50);
+  text(frameRate, 10, height-20);
   
   String str = "";
   float px = 0.0;
@@ -245,10 +247,12 @@ void draw() {
   
   
   // show the colour bigger
-  noStroke();
-  fill(get(mouseX, mouseY));
-  rect(mouseX+4, mouseY+4, 40, 40);
-  stroke(1);
+  if(mouseX > cam_x && mouseX < (cam_x+cam_w) && mouseY > cam_y && mouseY < (cam_y+cam_h)) {
+    noStroke();
+    fill(get(mouseX, mouseY));
+    rect(mouseX+4, mouseY+4, 40, 40);
+    stroke(1);
+  }
   
   
   
@@ -280,8 +284,19 @@ void draw() {
   }
   
   
-  
   drawStatusLeds();
+  
+  
+  
+  if(connected) {
+  char c;
+  while(device.available() > 0) {
+      c = device.readChar();
+      readData(c);
+    }
+  }
+  
+  
   
   
   if(recording) {
@@ -358,6 +373,14 @@ void keyPressed() {
     toggleStatusLed(2);
   } else if(key == 'v') {
     toggleStatusLed(3);
+  }
+  
+  if(key == 'h') {
+    // todo eh
+  }
+  
+  if(key == 'p') {
+    simulatePromulgate();
   }
   
 }
