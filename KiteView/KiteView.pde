@@ -181,7 +181,6 @@ void draw() {
     detectColors();
     
     
-    
     // Show images
     int scaley = 5;
     for (int i=0; i<outputs.length; i++) {
@@ -193,10 +192,7 @@ void draw() {
       }
     }
     
-    
     displayContoursBoundingBoxes();
-    
-    
     
   }
   
@@ -257,18 +253,18 @@ void draw() {
   
   
   
-  int hehehe = 275;
+  int start_x_actuators = 275;
   fill(255);
   textFont(font_md, 24);
-  text("Pitch", hehehe, 525);
+  text("Pitch", start_x_actuators, 525);
   
   fill(255);
   textFont(font_md, 24);
-  text("Yaw", hehehe+250, 525);
+  text("Yaw", start_x_actuators+250, 525);
   
   fill(255);
   textFont(font_md, 24);
-  text("Reel", hehehe+250+250, 525);
+  text("Reel", start_x_actuators+250+250, 525);
   
   
   
@@ -289,8 +285,8 @@ void draw() {
   
   
   if(connected) {
-  char c;
-  while(device.available() > 0) {
+    char c;
+    while(device.available() > 0) {
       c = device.readChar();
       readData(c);
     }

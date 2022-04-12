@@ -234,25 +234,6 @@ void reelGui() {
 }
 
 
-String formatTimeStr() {
-  String str = "";
-  if(hour() < 10) {
-    str += "0";
-  }
-  str += hour() + ":";
-  if(minute() < 10) {
-    str += "0";
-  }
-  str += minute() + ":";
-  if(second() < 10) {
-    str += "0";
-  }
-  str += second() + ":" + millis();
-  
-  return str;
-}
-
-
 
 /*
 public void controlEvent(ControlEvent theEvent) {
@@ -268,9 +249,9 @@ public void connectButton(int theValue) {
   if(!connected) {
   
     if(port != 99) {
+      device = new Serial(this, Serial.list()[port], 9600);
       println("connected");
       connected = true;
-      device = new Serial(this, Serial.list()[port], 9600);
       cp5.getController("connect").setCaptionLabel("Disconnect");
     } else {
       println("need to select a port!"); 
@@ -352,10 +333,6 @@ void dropdown(int n) {
 
 
 
-
-
-
-
 void drawStatusLeds() {
  
   int start_x = 35;
@@ -401,4 +378,23 @@ void toggleStatusLed(int i) {
   } else if(status_leds[i] == 1) {
     status_leds[i] = 0; 
   }
+}
+
+
+String formatTimeStr() {
+  String str = "";
+  if(hour() < 10) {
+    str += "0";
+  }
+  str += hour() + ":";
+  if(minute() < 10) {
+    str += "0";
+  }
+  str += minute() + ":";
+  if(second() < 10) {
+    str += "0";
+  }
+  str += second() + ":" + millis();
+  
+  return str;
 }
