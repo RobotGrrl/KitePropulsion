@@ -27,6 +27,7 @@ Capture cam;
 VideoExport sketchExport;
 VideoExport camExport;
 ControlP5 cp5;
+Movie video;
 
 
 OpenCV opencv;
@@ -54,11 +55,16 @@ boolean recording = false;
 //int cam_h = 486;
 int cam_w = 1296;
 int cam_h = 972;
+int vid_w = 960;
+int vid_h = 720;
 float cam_scale = 0.5;
+float vid_scale = 0.65;
 int cam_x = 325;
 int cam_y = 10;
 int cam_w_scaled = (int)(cam_w*cam_scale);
 int cam_h_scaled = (int)(cam_h*cam_scale);
+int vid_w_scaled = (int)(vid_w*vid_scale);
+int vid_h_scaled = (int)(vid_h*vid_scale);
 
 
 boolean kite_pos = false;
@@ -81,6 +87,7 @@ final int TRACE_MAX = 50;
 int[] trace_x = new int[TRACE_MAX];
 int[] trace_y = new int[TRACE_MAX];
 
+boolean vidpaused = false;
 
 
 void setup() {
@@ -88,6 +95,11 @@ void setup() {
   size(1280, 750);//, P2D); // P2D offloads some rendering to opengl, however in this sketch it makes it glitchy
   //frameRate(60);
   //noSmooth();
+  
+  //video = new Movie(this, "hill-720p-4_3.mp4");
+  video = new Movie(this, "hill-crop-720p-4_3.mp4");
+  video.loop();
+  video.play();
   
   font_lg = loadFont("LucidaSans-48.vlw");
   font_md = loadFont("LucidaSans-24.vlw");
@@ -131,19 +143,22 @@ void setup() {
   
   sketchExport.setFrameRate(5);
   
+  // set up opencv
   if(CAMERA_ENABLED) {
-    // set up opencv
     opencv = new OpenCV(this, cam.width, cam.height);
-    contours_1 = new ArrayList<Contour>();
-    contours_2 = new ArrayList<Contour>();
-    contours_3 = new ArrayList<Contour>();
-    
-    // Array for detection colors
-    colors = new int[maxColors];
-    hues = new int[maxColors];
-    
-    outputs = new PImage[maxColors];
+  } else {
+    opencv = new OpenCV(this, video.width, video.height);
   }
+  
+  contours_1 = new ArrayList<Contour>();
+  contours_2 = new ArrayList<Contour>();
+  contours_3 = new ArrayList<Contour>();
+  
+  // Array for detection colors
+  colors = new int[maxColors];
+  hues = new int[maxColors];
+  
+  outputs = new PImage[maxColors];
   
   resetTracePoints();
   
@@ -171,30 +186,38 @@ void draw() {
     // <2> Load the new frame of our movie in to OpenCV
     opencv.loadImage(cam);
     
-    // Tell OpenCV to use color information
-    opencv.useColor();
-    src = opencv.getSnapshot();
+  } else {
     
-    // <3> Tell OpenCV to work in HSV color space.
-    opencv.useColor(HSB);
+    image(video, cam_x, cam_y, vid_w_scaled, vid_h_scaled);
     
-    detectColors();
-    
-    
-    // Show images
-    int scaley = 5;
-    for (int i=0; i<outputs.length; i++) {
-      if (outputs[i] != null) {
-        image(outputs[i], cam_x+cam_w_scaled+40, i*src.height/scaley+((i+1)*10), src.width/scaley, src.height/scaley);
-        noStroke();
-        fill(colors[i]);
-        rect(cam_x+cam_w_scaled+10, i*src.height/scaley+((i+1)*10), 30, src.height/scaley);
-      }
-    }
-    
-    displayContoursBoundingBoxes();
+    // <2> Load the new frame of our movie in to OpenCV
+    opencv.loadImage(video);
     
   }
+    
+  // Tell OpenCV to use color information
+  opencv.useColor();
+  src = opencv.getSnapshot();
+  
+  // <3> Tell OpenCV to work in HSV color space.
+  opencv.useColor(HSB);
+  
+  detectColors();
+  
+  
+  // Show images
+  int scaley = 5;
+  for (int i=0; i<outputs.length; i++) {
+    if (outputs[i] != null) {
+      image(outputs[i], cam_x+cam_w_scaled+40, i*src.height/scaley+((i+1)*10), src.width/scaley, src.height/scaley);
+      noStroke();
+      fill(colors[i]);
+      rect(cam_x+cam_w_scaled+10, i*src.height/scaley+((i+1)*10), 30, src.height/scaley);
+    }
+  }
+  
+  displayContoursBoundingBoxes();
+ 
   
   
   
@@ -306,6 +329,12 @@ void draw() {
 
 
 
+void movieEvent(Movie m) {
+  m.read();
+}
+
+
+
 
 void slider(float theColor) {
   println("a slider event");
@@ -375,10 +404,19 @@ void keyPressed() {
     // todo eh
   }
   
-  if(key == 'p') {
+  if(key == 'g') {
     simulatePromulgate();
-  } else if(key == 'o') {
+  } else if(key == 'h') {
     simulatePromulgateBig();
+  }
+  
+  if(key == 'p') {
+    if(vidpaused) {
+      video.play(); 
+    } else {
+      video.pause(); 
+    }
+    vidpaused = !vidpaused;
   }
   
 }
@@ -476,7 +514,7 @@ void displayContoursBoundingBoxes() {
     Contour contour = contours_1.get(i);
     Rectangle r = contour.getBoundingBox();
     
-    if (r.width < 60 || r.height < 60)
+    if (r.width < 10 || r.height < 10)
       continue;
     
     //println("1 [" + i + "]: " + r);
@@ -485,13 +523,26 @@ void displayContoursBoundingBoxes() {
     stroke(255, 255, 255, 100);
     fill(c_new);
     strokeWeight(2);
-    rect(r.x*cam_scale+cam_x, r.y*cam_scale+cam_y, r.width*cam_scale, r.height*cam_scale);
+    
+    if(CAMERA_ENABLED) {
+      rect(r.x*cam_scale+cam_x, r.y*cam_scale+cam_y, r.width*cam_scale, r.height*cam_scale);
+    } else {
+      rect(r.x*vid_scale+cam_x, r.y*vid_scale+cam_y, r.width*vid_scale, r.height*vid_scale);
+    }
     
     if(!kite_pos) {
-      kite_x = (int)(r.x*cam_scale+cam_x);
-      kite_y = (int)(r.y*cam_scale+cam_y);
-      kite_w = (int)(r.width*cam_scale);
-      kite_h = (int)(r.height*cam_scale);
+      
+      if(CAMERA_ENABLED) {
+        kite_x = (int)(r.x*cam_scale+cam_x);
+        kite_y = (int)(r.y*cam_scale+cam_y);
+        kite_w = (int)(r.width*cam_scale);
+        kite_h = (int)(r.height*cam_scale);
+      } else {
+        kite_x = (int)(r.x*vid_scale+cam_x);
+        kite_y = (int)(r.y*vid_scale+cam_y);
+        kite_w = (int)(r.width*vid_scale);
+        kite_h = (int)(r.height*vid_scale);
+      }
       
       addTracePoint(kite_x+(kite_w/2), kite_y+(kite_h/2));
       
