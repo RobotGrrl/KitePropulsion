@@ -23,6 +23,8 @@ static final boolean DEBUG = true;
 
 static boolean CAMERA_ENABLED = false;
 
+PrintWriter output;
+
 Capture cam;
 VideoExport sketchExport;
 VideoExport camExport;
@@ -163,6 +165,10 @@ void setup() {
   resetTracePoints();
   
   imageMode(CORNER);
+  
+  String fn = month() + "-" + day() + "-" + year() + "_" + hour() + "-" + minute() + "-" + second();
+  output = createWriter("data/" + fn + ".txt");
+  output.println("X,Y");
   
 }
 
@@ -377,6 +383,8 @@ void keyPressed() {
   if(key == 'q') {
     // stop record, disconnect, and exit
     stopRecording();
+    output.flush();
+    output.close();
     exit();
   }
   
@@ -439,6 +447,8 @@ void addTracePoint(int x, int y) {
   
   trace_x[0] = x;
   trace_y[0] = y;
+  
+  output.println(trace_x[0] + "," + trace_y[0]);
   
 }
 
