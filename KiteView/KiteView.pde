@@ -88,6 +88,7 @@ boolean trace = false;
 final int TRACE_MAX = 50;
 int[] trace_x = new int[TRACE_MAX];
 int[] trace_y = new int[TRACE_MAX];
+long last_track = 0;
 
 boolean vidpaused = false;
 
@@ -167,7 +168,7 @@ void setup() {
   imageMode(CORNER);
   
   String fn = month() + "-" + day() + "-" + year() + "_" + hour() + "-" + minute() + "-" + second();
-  output = createWriter("data/" + fn + ".txt");
+  output = createWriter("data/" + fn + ".csv");
   output.println("X,Y");
   
 }
@@ -440,6 +441,25 @@ void addTracePoint(int x, int y) {
   
   if(!trace) return;
   
+  int THRESH_FAR = 50;
+  
+  // if there's been points added already
+  if(trace_x[0] != -1 || trace_y[0] != -1) {
+    
+    // it's too far away
+    if(abs(x-trace_x[0]) >= THRESH_FAR || abs(y-trace_y[0]) >= THRESH_FAR) {
+      
+      // if it's been some time since the last skip, then add it anyway
+      if(millis()-last_track >= 2000 || last_track == 0) {
+        println("new point is far away, but it's been a while - add anyway");
+      } else {
+        println("new point is too far away - skip");
+        return;
+      }
+      
+    }
+  }
+  
   for(int i=TRACE_MAX-1; i>0; i--) {
     trace_x[i] = trace_x[i-1];
     trace_y[i] = trace_y[i-1];
@@ -447,6 +467,8 @@ void addTracePoint(int x, int y) {
   
   trace_x[0] = x;
   trace_y[0] = y;
+  
+  last_track = millis(); 
   
   output.println(trace_x[0] + "," + trace_y[0]);
   
