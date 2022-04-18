@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "input_buf.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,7 +48,8 @@ UART_HandleTypeDef huart4;
 PCD_HandleTypeDef hpcd_USB_FS;
 
 /* USER CODE BEGIN PV */
-
+uint8_t uart_byte_buf[1];
+input_buf uart_buf;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -64,7 +65,10 @@ static void MX_UART4_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	input_buf_add(&uart_buf, uart_byte_buf[0]);
+	HAL_UART_Receive_IT(&huart4, uart_byte_buf, 1);
+}
 /* USER CODE END 0 */
 
 /**
@@ -105,9 +109,22 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  input_buf_reset(&uart_buf);
+  HAL_UART_Receive_IT(&huart4, uart_byte_buf, 1);
   while (1)
   {
 
+  	if(input_buf_ready(&uart_buf)) {
+  		uint8_t my_str[] = "received: ";
+  		HAL_UART_Transmit(&huart4, my_str, sizeof(my_str), HAL_MAX_DELAY);
+  		HAL_UART_Transmit(&huart4, uart_buf.buf, uart_buf.curr_index, HAL_MAX_DELAY);
+  		uint8_t my_str2[] = "\r\n";
+  		HAL_UART_Transmit(&huart4, my_str2, sizeof(my_str2), HAL_MAX_DELAY);
+  		//printf("received: %s", uart_buf.buf);
+  		input_buf_reset(&uart_buf);
+  	}
+
+  	/*
   	HAL_GPIO_WritePin(GPIOE, CS_I2C_SPI_Pin|LD4_Pin|LD3_Pin|LD5_Pin
   	                          |LD7_Pin|LD9_Pin|LD10_Pin|LD8_Pin
   	                          |LD6_Pin, GPIO_PIN_RESET);
@@ -116,6 +133,7 @@ int main(void)
   	  	                          |LD7_Pin|LD9_Pin|LD10_Pin|LD8_Pin
   	  	                          |LD6_Pin, GPIO_PIN_SET);
   	HAL_Delay(100);
+		*/
 
 
     /* USER CODE END WHILE */
