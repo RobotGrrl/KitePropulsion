@@ -84,25 +84,25 @@ PFont font_md;
 PFont font_sm;
 
 
-boolean trace = false;
+boolean trace = true;
 final int TRACE_MAX = 50;
 int[] trace_x = new int[TRACE_MAX];
 int[] trace_y = new int[TRACE_MAX];
 long last_track = 0;
 
-boolean vidpaused = false;
+boolean vidpaused = true;
 
 
 void setup() {
   
   size(1280, 750);//, P2D); // P2D offloads some rendering to opengl, however in this sketch it makes it glitchy
-  //frameRate(60);
+  frameRate(10);
   //noSmooth();
   
   //video = new Movie(this, "hill-720p-4_3.mp4");
   video = new Movie(this, "hill-crop-720p-4_3.mp4");
   video.loop();
-  video.play();
+  video.volume(0);
   
   font_lg = loadFont("LucidaSans-48.vlw");
   font_md = loadFont("LucidaSans-24.vlw");
@@ -164,12 +164,13 @@ void setup() {
   outputs = new PImage[maxColors];
   
   resetTracePoints();
+  defaultTrackHue();
   
   imageMode(CORNER);
   
   String fn = month() + "-" + day() + "-" + year() + "_" + hour() + "-" + minute() + "-" + second();
   output = createWriter("data/" + fn + ".csv");
-  output.println("X,Y");
+  output.println("FRAME_COUNT,MILLIS,X,Y,W,H,SKIPPED");
   
 }
 
@@ -274,10 +275,11 @@ void draw() {
   
   // show the colour bigger
   if(mouseX > cam_x && mouseX < (cam_x+cam_w_scaled) && mouseY > cam_y && mouseY < (cam_y+cam_h_scaled)) {
-    noStroke();
     fill(get(mouseX, mouseY));
     rect(mouseX+4, mouseY+4, 40, 40);
+    fill(0);
     stroke(1);
+    noStroke();
   }
   
   
@@ -305,7 +307,9 @@ void draw() {
       }
       fill(144, 96, 214);
       ellipse(trace_x[i], trace_y[i], 15, 15);
+      stroke(0);
       if(i>0) line(trace_x[i], trace_y[i], trace_x[i-1], trace_y[i-1]);
+      noStroke();
     }
   }
   
@@ -366,6 +370,14 @@ void mousePressed() {
 }
 
 
+void defaultTrackHue() {
+  color track_colour = color(202, 27, 33);
+  int track_hue = int(map(hue(track_colour), 0, 255, 0, 180));
+  colors[0] = track_colour;
+  hues[0] = track_hue;
+  println("color index " + (0) + ", value: " + track_hue);
+}
+
 
 void mouseClicked() {
   
@@ -421,8 +433,10 @@ void keyPressed() {
   
   if(key == 'p') {
     if(vidpaused) {
+      video.volume(0);
       video.play(); 
     } else {
+      video.volume(0);
       video.pause(); 
     }
     vidpaused = !vidpaused;
@@ -441,7 +455,8 @@ void addTracePoint(int x, int y) {
   
   if(!trace) return;
   
-  int THRESH_FAR = 50;
+  int THRESH_FAR = 75;
+  boolean skip = false;
   
   // if there's been points added already
   if(trace_x[0] != -1 || trace_y[0] != -1) {
@@ -454,23 +469,38 @@ void addTracePoint(int x, int y) {
         println("new point is far away, but it's been a while - add anyway");
       } else {
         println("new point is too far away - skip");
-        return;
+        skip = true;
       }
       
     }
   }
   
-  for(int i=TRACE_MAX-1; i>0; i--) {
-    trace_x[i] = trace_x[i-1];
-    trace_y[i] = trace_y[i-1];
+  if(!skip) {
+    
+    for(int i=TRACE_MAX-1; i>0; i--) {
+      trace_x[i] = trace_x[i-1];
+      trace_y[i] = trace_y[i-1];
+    }
+    
+    trace_x[0] = x;
+    trace_y[0] = y;
+    
+    last_track = millis(); 
   }
   
-  trace_x[0] = x;
-  trace_y[0] = y;
-  
-  last_track = millis(); 
-  
-  output.println(trace_x[0] + "," + trace_y[0]);
+  // FRAME_COUNT,MILLIS,X,Y,W,H,SKIPPED
+  output.print(frameCount + "," + millis() + ",");
+  if(!skip) {
+    output.print(trace_x[0] + "," + trace_y[0] + ",");
+  } else {
+    output.print(x + "," + y + ",");
+  }
+  output.print(kite_w + "," + kite_h + ",");
+  if(skip) {
+    output.println("1");
+  } else {
+    output.println("0");
+  }
   
 }
 
@@ -562,6 +592,8 @@ void displayContoursBoundingBoxes() {
       rect(r.x*vid_scale+cam_x, r.y*vid_scale+cam_y, r.width*vid_scale, r.height*vid_scale);
     }
     
+    noStroke();
+    
     if(!kite_pos) {
       
       if(CAMERA_ENABLED) {
@@ -599,6 +631,7 @@ void displayContoursBoundingBoxes() {
     fill(c_new);
     strokeWeight(2);
     rect(r.x*cam_scale+cam_x, r.y*cam_scale+cam_y, r.width*cam_scale, r.height*cam_scale);
+    noStroke();
     
   }
   
@@ -618,6 +651,7 @@ void displayContoursBoundingBoxes() {
     fill(c_new);
     strokeWeight(2);
     rect(r.x*cam_scale+cam_x, r.y*cam_scale+cam_y, r.width*cam_scale, r.height*cam_scale);
+    noStroke();
     
   }
   
