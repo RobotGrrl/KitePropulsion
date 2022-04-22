@@ -92,6 +92,10 @@ long last_track = 0;
 
 boolean vidpaused = true;
 
+boolean draw_landscape_mode = false;
+int landscape_y1 = -1;
+int landscape_y2 = -1;
+
 
 void setup() {
   
@@ -328,6 +332,82 @@ void draw() {
   
   
   
+  if(draw_landscape_mode) {
+    
+    boolean draw_it = false;
+    
+    if(CAMERA_ENABLED) {
+      if(mouseX > cam_x && mouseX < (cam_x+cam_w_scaled) && mouseY > cam_y && mouseY < (cam_y+cam_h_scaled)) {
+        draw_it = true;
+      }
+    } else {
+      if(mouseX > cam_x && mouseX < (cam_x+vid_w_scaled) && mouseY > cam_y && mouseY < (cam_y+vid_h_scaled)) {
+        draw_it = true;
+      }
+    }
+    
+    if(draw_it) {
+      fill(235, 222, 52);
+      ellipse(mouseX-4, mouseY+4, 15, 15);
+    }
+    
+  }
+  
+  
+  if(landscape_y1 > -1 && landscape_y2 > -1) {
+    
+    //draw_landscape_mode = false; // auto-exit
+    
+    int x1 = cam_x;
+    int x2 = 0;
+    int y_max = 0;
+    
+    if(CAMERA_ENABLED) {
+      x2 = (cam_x+cam_w_scaled);
+      y_max = cam_y+cam_h_scaled;
+    } else {
+      x2 = (cam_x+vid_w_scaled);
+      y_max = cam_y+vid_h_scaled;
+    }
+    
+    // draw circles at points
+    fill(235, 222, 52);
+    ellipse(x1, landscape_y1, 15, 15);
+    ellipse(x2, landscape_y2, 15, 15);
+    
+    // colour outline of top part yellow too
+    noFill();
+    stroke(235, 222, 52);
+    strokeWeight(2);
+    beginShape();
+    vertex(x1, landscape_y1);
+    vertex(x2, landscape_y2);
+    vertex(x2, cam_y);
+    vertex(x1, cam_y);
+    endShape(CLOSE);
+    
+    // colour bottom part grey
+    color c1 = 50;//235, 222, 52;
+    fill(c1, 220);
+    stroke(50, 50, 50);
+    strokeWeight(2);
+    beginShape();
+    vertex(x1, landscape_y1);
+    vertex(x2, landscape_y2);
+    vertex(x2, y_max);
+    vertex(x1, y_max);
+    endShape(CLOSE);
+    
+    // colour line yellow
+    stroke(235, 222, 52);
+    strokeWeight(2);
+    line(x1, landscape_y1, x2, landscape_y2);
+    
+    noStroke();
+  }
+  
+  
+  
   
   if(recording) {
     sketchExport.saveFrame();
@@ -367,6 +447,29 @@ void mousePressed() {
     
     println("color index " + (colorToChange-1) + ", value: " + hue);
   }
+  
+  
+  
+  if(draw_landscape_mode) {
+    
+    float halfway = 0.0;
+    
+    if(CAMERA_ENABLED) {
+      halfway = cam_x+(cam_w_scaled/2.0);
+    } else {
+      halfway = cam_x+(vid_w_scaled/2.0);
+    }
+    
+    if(mouseX < halfway) {
+      landscape_y1 = mouseY;
+      println("landscape_y1: " + landscape_y1);
+    } else if(mouseX >= halfway) {
+      landscape_y2 = mouseY;
+      println("landscape_y2: " + landscape_y1);
+    }
+  }
+  
+  
 }
 
 
@@ -440,6 +543,15 @@ void keyPressed() {
       video.pause(); 
     }
     vidpaused = !vidpaused;
+  }
+  
+  if(key == 'l') {
+    draw_landscape_mode = !draw_landscape_mode;
+    if(draw_landscape_mode) {
+      // reset
+      landscape_y1 = -1;
+      landscape_y2 = -1;
+    }
   }
   
 }
