@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "input_buf.h"
+#include "console.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -87,7 +88,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  ConsoleInit();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -114,6 +115,13 @@ int main(void)
   while (1)
   {
 
+  	// new
+  	if(input_buf_ready(&uart_buf)) {
+  		ConsoleProcess();
+			input_buf_reset(&uart_buf);
+		}
+
+  	/*
   	if(input_buf_ready(&uart_buf)) {
   		uint8_t my_str[] = "received: ";
   		HAL_UART_Transmit(&huart4, my_str, sizeof(my_str), HAL_MAX_DELAY);
@@ -123,6 +131,7 @@ int main(void)
   		//printf("received: %s", uart_buf.buf);
   		input_buf_reset(&uart_buf);
   	}
+  	*/
 
   	/*
   	HAL_GPIO_WritePin(GPIOE, CS_I2C_SPI_Pin|LD4_Pin|LD3_Pin|LD5_Pin
