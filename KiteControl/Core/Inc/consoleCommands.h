@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include "console.h"
+#include <stdbool.h> // new
 
 #define CONSOLE_COMMAND_MAX_COMMAND_LENGTH 10		// command only
 #define CONSOLE_COMMAND_MAX_LENGTH 256				// whole command with argument
@@ -37,6 +38,8 @@ typedef struct sConsoleCommandStruct
 #define CONSOLE_COMMAND_TABLE_END {NULL, NULL, HELP("")}
 
 const sConsoleCommandTable_T* ConsoleCommandsGetTable(void);
+
+extern bool blink_leds; // new // does this work?
 
 #endif // CONSOLE_COMMANDS_H
 

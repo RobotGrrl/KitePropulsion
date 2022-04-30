@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "input_buf.h"
 #include "console.h"
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,6 +52,7 @@ PCD_HandleTypeDef hpcd_USB_FS;
 /* USER CODE BEGIN PV */
 uint8_t uart_byte_buf[1];
 input_buf uart_buf;
+bool blink_leds = false;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,7 +90,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  ConsoleInit();
+
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -110,6 +112,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  ConsoleInit();
   input_buf_reset(&uart_buf);
   HAL_UART_Receive_IT(&huart4, uart_byte_buf, 1);
   while (1)
@@ -133,16 +136,20 @@ int main(void)
   	}
   	*/
 
-  	/*
-  	HAL_GPIO_WritePin(GPIOE, CS_I2C_SPI_Pin|LD4_Pin|LD3_Pin|LD5_Pin
-  	                          |LD7_Pin|LD9_Pin|LD10_Pin|LD8_Pin
-  	                          |LD6_Pin, GPIO_PIN_RESET);
-  	HAL_Delay(100);
-  	HAL_GPIO_WritePin(GPIOE, CS_I2C_SPI_Pin|LD4_Pin|LD3_Pin|LD5_Pin
-  	  	                          |LD7_Pin|LD9_Pin|LD10_Pin|LD8_Pin
-  	  	                          |LD6_Pin, GPIO_PIN_SET);
-  	HAL_Delay(100);
-		*/
+  	if(blink_leds) {
+			HAL_GPIO_WritePin(GPIOE, CS_I2C_SPI_Pin|LD4_Pin|LD3_Pin|LD5_Pin
+																|LD7_Pin|LD9_Pin|LD10_Pin|LD8_Pin
+																|LD6_Pin, GPIO_PIN_RESET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, CS_I2C_SPI_Pin|LD4_Pin|LD3_Pin|LD5_Pin
+																		|LD7_Pin|LD9_Pin|LD10_Pin|LD8_Pin
+																		|LD6_Pin, GPIO_PIN_SET);
+			HAL_Delay(100);
+  	} else {
+  		HAL_GPIO_WritePin(GPIOE, CS_I2C_SPI_Pin|LD4_Pin|LD3_Pin|LD5_Pin
+  																		|LD7_Pin|LD9_Pin|LD10_Pin|LD8_Pin
+  																		|LD6_Pin, GPIO_PIN_RESET);
+  	}
 
 
     /* USER CODE END WHILE */

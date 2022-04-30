@@ -18,6 +18,7 @@
 
 #define IGNORE_UNUSED_VARIABLE(x)     if ( &x == &x ) {}
 
+static eCommandResult_T ConsoleCommandBlinky(const char buffer[]); // new
 static eCommandResult_T ConsoleCommandComment(const char buffer[]);
 static eCommandResult_T ConsoleCommandVer(const char buffer[]);
 static eCommandResult_T ConsoleCommandHelp(const char buffer[]);
@@ -26,7 +27,8 @@ static eCommandResult_T ConsoleCommandParamExampleHexUint16(const char buffer[])
 
 static const sConsoleCommandTable_T mConsoleCommandTable[] =
 {
-    {";", &ConsoleCommandComment, HELP("Comment! You do need a space after the semicolon. ")},
+		{"blinky", &ConsoleCommandBlinky, HELP("Blinky")},
+		{";", &ConsoleCommandComment, HELP("Comment! You do need a space after the semicolon. ")},
     {"help", &ConsoleCommandHelp, HELP("Lists the commands available")},
     {"ver", &ConsoleCommandVer, HELP("Get the version string")},
     {"int", &ConsoleCommandParamExampleInt16, HELP("How to get a signed int16 from params list: int -321")},
@@ -34,6 +36,19 @@ static const sConsoleCommandTable_T mConsoleCommandTable[] =
 
 	CONSOLE_COMMAND_TABLE_END // must be LAST
 };
+
+static eCommandResult_T ConsoleCommandBlinky(const char buffer[]) { // new
+	blink_leds = !blink_leds;
+	if(blink_leds) {
+		ConsoleIoSendString("blink starting");
+		ConsoleIoSendString(STR_ENDLINE);
+	} else {
+		ConsoleIoSendString("blink stopping");
+		ConsoleIoSendString(STR_ENDLINE);
+	}
+	IGNORE_UNUSED_VARIABLE(buffer);
+	return COMMAND_SUCCESS;
+}
 
 static eCommandResult_T ConsoleCommandComment(const char buffer[])
 {
