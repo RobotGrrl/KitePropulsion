@@ -1,0 +1,10 @@
+% Saved 2022-05-01 T 02:47:07 -0400
+% Kite Propulsion Generator Prototype Iteration 1.0
+Moku:Oscilloscope
+Channel A (Input 1) - DC coupling, 1 MOhm impedance, 1 x probe attenuation
+Channel B (Input 2) - DC coupling, 1 MOhm impedance, 1 x probe attenuation
+Time span 3.000 s, time offset 1.740 s, Normal acquisition mode, 1 averages
+Edge trigger: Channel A, level 2.000 V, Auto mode, Rising edge, Auto sensitivity, noise reject off, HF reject off
+Output 1 - Pulse, 50.000 000 Hz, 3.303 5 Vpp, offset 0.000 0 V, phase 0.000 deg, width 1.000 ms, edge 4.000 ns, output load 1 MOhm
+Output 2 - Ramp, 50.000 000 000 kHz, 500.9 mVpp, offset 0.000 0 V, phase 0.000 deg, symmetry 90.00 %, output load 50 Ohm
+Internal 10 MHz clock
