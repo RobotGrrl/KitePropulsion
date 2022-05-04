@@ -45,6 +45,8 @@
 
 SPI_HandleTypeDef hspi1;
 
+TIM_HandleTypeDef htim2;
+
 UART_HandleTypeDef huart4;
 
 PCD_HandleTypeDef hpcd_USB_FS;
@@ -53,6 +55,8 @@ PCD_HandleTypeDef hpcd_USB_FS;
 uint8_t uart_byte_buf[1];
 input_buf uart_buf;
 bool blink_leds = false;
+
+volatile step_a = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -62,6 +66,7 @@ static void MX_I2C1_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USB_PCD_Init(void);
 static void MX_UART4_Init(void);
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -72,6 +77,41 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	input_buf_add(&uart_buf, uart_byte_buf[0]);
 	HAL_UART_Receive_IT(&huart4, uart_byte_buf, 1);
 }
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+
+	// check which timer triggered this callback
+
+	if (htim == &htim2) { // stepper A
+
+		if(0 == step_a) {
+			HAL_GPIO_WritePin(STEP_A1_Pin_GPIO_Port, STEP_A1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A2_Pin_GPIO_Port, STEP_A2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A3_Pin_GPIO_Port, STEP_A3_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A4_Pin_GPIO_Port, STEP_A4_Pin, GPIO_PIN_RESET);
+		} else if(1 == step_a) {
+			HAL_GPIO_WritePin(STEP_A1_Pin_GPIO_Port, STEP_A1_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A2_Pin_GPIO_Port, STEP_A2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A3_Pin_GPIO_Port, STEP_A3_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A4_Pin_GPIO_Port, STEP_A4_Pin, GPIO_PIN_RESET);
+		} else if(2 == step_a) {
+			HAL_GPIO_WritePin(STEP_A1_Pin_GPIO_Port, STEP_A1_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A2_Pin_GPIO_Port, STEP_A2_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A3_Pin_GPIO_Port, STEP_A3_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A4_Pin_GPIO_Port, STEP_A4_Pin, GPIO_PIN_SET);
+		} else if(3 == step_a) {
+			HAL_GPIO_WritePin(STEP_A1_Pin_GPIO_Port, STEP_A1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A2_Pin_GPIO_Port, STEP_A2_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A3_Pin_GPIO_Port, STEP_A3_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A4_Pin_GPIO_Port, STEP_A4_Pin, GPIO_PIN_SET);
+		}
+
+		step_a++;
+		if(step_a > 4) step_a = 0;
+	}
+
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -106,12 +146,14 @@ int main(void)
   MX_SPI1_Init();
   MX_USB_PCD_Init();
   MX_UART4_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_TIM_Base_Start_IT(&htim2);
   ConsoleInit();
   input_buf_reset(&uart_buf);
   HAL_UART_Receive_IT(&huart4, uart_byte_buf, 1);
@@ -298,6 +340,65 @@ static void MX_SPI1_Init(void)
 }
 
 /**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 100;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 8000;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_OC_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_TOGGLE;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+  HAL_TIM_MspPostInit(&htim2);
+
+}
+
+/**
   * @brief UART4 Initialization Function
   * @param None
   * @retval None
@@ -377,12 +478,16 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, CS_I2C_SPI_Pin|LD4_Pin|LD3_Pin|LD5_Pin
                           |LD7_Pin|LD9_Pin|LD10_Pin|LD8_Pin
                           |LD6_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOD, STEP_A2_Pin|STEP_A1_Pin|STEP_A4_Pin|STEP_A3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : DRDY_Pin MEMS_INT3_Pin MEMS_INT4_Pin MEMS_INT1_Pin
                            MEMS_INT2_Pin */
@@ -408,6 +513,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : STEP_A2_Pin STEP_A1_Pin STEP_A4_Pin STEP_A3_Pin */
+  GPIO_InitStruct.Pin = STEP_A2_Pin|STEP_A1_Pin|STEP_A4_Pin|STEP_A3_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 }
 
