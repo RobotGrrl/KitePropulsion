@@ -24,6 +24,7 @@
 #include "input_buf.h"
 #include "console.h"
 #include <stdbool.h>
+#include "../../Drivers/BSP/STM32F3-Discovery/stm32f3_discovery.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -85,25 +86,25 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if (htim == &htim2) { // stepper A
 
 		if(0 == step_a) {
-			HAL_GPIO_WritePin(STEP_A1_Pin_GPIO_Port, STEP_A1_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(STEP_A2_Pin_GPIO_Port, STEP_A2_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(STEP_A3_Pin_GPIO_Port, STEP_A3_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(STEP_A4_Pin_GPIO_Port, STEP_A4_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A4_GPIO_Port, STEP_A4_Pin, GPIO_PIN_RESET);
 		} else if(1 == step_a) {
-			HAL_GPIO_WritePin(STEP_A1_Pin_GPIO_Port, STEP_A1_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(STEP_A2_Pin_GPIO_Port, STEP_A2_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(STEP_A3_Pin_GPIO_Port, STEP_A3_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(STEP_A4_Pin_GPIO_Port, STEP_A4_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A4_GPIO_Port, STEP_A4_Pin, GPIO_PIN_RESET);
 		} else if(2 == step_a) {
-			HAL_GPIO_WritePin(STEP_A1_Pin_GPIO_Port, STEP_A1_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(STEP_A2_Pin_GPIO_Port, STEP_A2_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(STEP_A3_Pin_GPIO_Port, STEP_A3_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(STEP_A4_Pin_GPIO_Port, STEP_A4_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A4_GPIO_Port, STEP_A4_Pin, GPIO_PIN_SET);
 		} else if(3 == step_a) {
-			HAL_GPIO_WritePin(STEP_A1_Pin_GPIO_Port, STEP_A1_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(STEP_A2_Pin_GPIO_Port, STEP_A2_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(STEP_A3_Pin_GPIO_Port, STEP_A3_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(STEP_A4_Pin_GPIO_Port, STEP_A4_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A4_GPIO_Port, STEP_A4_Pin, GPIO_PIN_SET);
 		}
 
 		step_a++;
