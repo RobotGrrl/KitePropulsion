@@ -5,7 +5,6 @@ void guiSetup() {
   int start_y = 320;
   int sp = 50;
   
-  
   cp5.addButton("connectButton")
      .setValue(0)
      .setPosition(20,start_y+(sp*1))
@@ -234,13 +233,6 @@ void reelGui() {
 }
 
 
-
-/*
-public void controlEvent(ControlEvent theEvent) {
-  println(theEvent.getController().getName());
-}
-*/
-
 public void connectButton(int theValue) {
   if(millis() < 5000) return; // weird cp5 behaviour
   
@@ -313,6 +305,7 @@ public void traceButton(int theValue) {
   
 }
 
+
 void dropdown(int n) {
   /* request the selected item based on index n */
   println(n, cp5.get(ScrollableList.class, "dropdown").getItem(n));
@@ -330,7 +323,6 @@ void dropdown(int n) {
   cp5.get(ScrollableList.class, "dropdown").getItem(n).put("color", c);
   
 }
-
 
 
 void drawStatusLeds() {
@@ -397,4 +389,9 @@ String formatTimeStr() {
   str += second() + ":" + millis();
   
   return str;
+}
+
+
+int getActivityViewWidth() {
+  return activity_w_scaled;
 }

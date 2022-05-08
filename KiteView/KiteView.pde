@@ -61,12 +61,12 @@ int vid_w = 960;
 int vid_h = 720;
 float cam_scale = 0.5;
 float vid_scale = 0.65;
-int cam_x = 325;
-int cam_y = 10;
-int cam_w_scaled = (int)(cam_w*cam_scale);
-int cam_h_scaled = (int)(cam_h*cam_scale);
-int vid_w_scaled = (int)(vid_w*vid_scale);
-int vid_h_scaled = (int)(vid_h*vid_scale);
+
+int activity_view_x = 325;
+int activity_view_y = 10;
+float activity_scale;
+int activity_w_scaled;
+int activity_h_scaled;
 
 
 boolean kite_pos = false;
@@ -93,8 +93,8 @@ long last_track = 0;
 boolean vidpaused = true;
 
 boolean draw_landscape_mode = false;
-int landscape_y1 = -1;
-int landscape_y2 = -1;
+int landscape_y1 = 300;//-1;
+int landscape_y2 = 350;//-1;
 
 
 void setup() {
@@ -116,6 +116,18 @@ void setup() {
   cp5 = new ControlP5(this);
   cp5.setAutoDraw(false);
   guiSetup();
+  
+  
+  if(CAMERA_ENABLED) {
+    activity_scale = cam_scale;
+    activity_w_scaled = (int)(cam_w*cam_scale);
+    activity_h_scaled = (int)(cam_h*cam_scale);
+  } else {
+    activity_scale = vid_scale;
+    activity_w_scaled = (int)(vid_w*vid_scale);
+    activity_h_scaled = (int)(vid_h*vid_scale); 
+  }
+  
 
   if(CAMERA_ENABLED) {
     
@@ -193,14 +205,14 @@ void draw() {
       return; 
     }
   
-    image(cam, cam_x, cam_y, cam_w_scaled, cam_h_scaled);
+    image(cam, activity_view_x, activity_view_y, activity_w_scaled, activity_h_scaled);
     
     // <2> Load the new frame of our movie in to OpenCV
     opencv.loadImage(cam);
     
   } else {
     
-    image(video, cam_x, cam_y, vid_w_scaled, vid_h_scaled);
+    image(video, activity_view_x, activity_view_y, activity_w_scaled, activity_h_scaled);
     
     // <2> Load the new frame of our movie in to OpenCV
     opencv.loadImage(video);
@@ -221,10 +233,10 @@ void draw() {
   int scaley = 5;
   for (int i=0; i<outputs.length; i++) {
     if (outputs[i] != null) {
-      image(outputs[i], cam_x+cam_w_scaled+40, i*src.height/scaley+((i+1)*10), src.width/scaley, src.height/scaley);
+      image(outputs[i], activity_view_x+activity_w_scaled+40, i*src.height/scaley+((i+1)*10), src.width/scaley, src.height/scaley);
       noStroke();
       fill(colors[i]);
-      rect(cam_x+cam_w_scaled+10, i*src.height/scaley+((i+1)*10), 30, src.height/scaley);
+      rect(activity_view_x+activity_w_scaled+10, i*src.height/scaley+((i+1)*10), 30, src.height/scaley);
     }
   }
   
@@ -251,11 +263,11 @@ void draw() {
   float px = 0.0;
   textFont(font_sm, 16);
   
-  px = ( (float)(kite_x-cam_x) / (float)cam_w )*100;
+  px = ( (float)(kite_x-activity_view_x) / (float)cam_w )*100;
   str = ("kite x: " + kite_x + " px (" + nf(px, 0, 2) + "%)");
   text(str, 20, 120);
 
-  px = ( (float)(kite_y-cam_y) / (float)cam_h )*100;
+  px = ( (float)(kite_y-activity_view_y) / (float)cam_h )*100;
   str = ("kite y: " + kite_y + " px (" + nf(px, 0, 2) + "%)");
   text(str, 20, 140);
   
@@ -273,12 +285,15 @@ void draw() {
   str = ("z,x,c,v to simulate leds");
   text(str, 20, 220);
   
+  str = ("l to set landscape");
+  text(str, 20, 240);
+  
   
   
   
   
   // show the colour bigger
-  if(mouseX > cam_x && mouseX < (cam_x+cam_w_scaled) && mouseY > cam_y && mouseY < (cam_y+cam_h_scaled)) {
+  if(mouseX > activity_view_x && mouseX < (activity_view_x+activity_w_scaled) && mouseY > activity_view_y && mouseY < (activity_view_y+activity_h_scaled)) {
     fill(get(mouseX, mouseY));
     rect(mouseX+4, mouseY+4, 40, 40);
     fill(0);
@@ -336,14 +351,8 @@ void draw() {
     
     boolean draw_it = false;
     
-    if(CAMERA_ENABLED) {
-      if(mouseX > cam_x && mouseX < (cam_x+cam_w_scaled) && mouseY > cam_y && mouseY < (cam_y+cam_h_scaled)) {
-        draw_it = true;
-      }
-    } else {
-      if(mouseX > cam_x && mouseX < (cam_x+vid_w_scaled) && mouseY > cam_y && mouseY < (cam_y+vid_h_scaled)) {
-        draw_it = true;
-      }
+    if(mouseX > activity_view_x && mouseX < (activity_view_x+activity_w_scaled) && mouseY > activity_view_y && mouseY < (activity_view_y+activity_h_scaled)) {
+      draw_it = true;
     }
     
     if(draw_it) {
@@ -354,21 +363,22 @@ void draw() {
   }
   
   
-  if(landscape_y1 > -1 && landscape_y2 > -1) {
+  if(landscapeDrawn()) {
+    
+    for(int i=0; i<getActivityViewWidth(); i++) {
+      fill(0,255,0);
+      ellipse(i+activity_view_x, landscapeLineY((int)(i+activity_view_x)), 5, 5);
+    }
+    
     
     //draw_landscape_mode = false; // auto-exit
     
-    int x1 = cam_x;
+    int x1 = activity_view_x;
     int x2 = 0;
     int y_max = 0;
     
-    if(CAMERA_ENABLED) {
-      x2 = (cam_x+cam_w_scaled);
-      y_max = cam_y+cam_h_scaled;
-    } else {
-      x2 = (cam_x+vid_w_scaled);
-      y_max = cam_y+vid_h_scaled;
-    }
+    x2 = (activity_view_x+activity_w_scaled);
+    y_max = activity_view_y+activity_h_scaled;
     
     // draw circles at points
     fill(235, 222, 52);
@@ -382,11 +392,13 @@ void draw() {
     beginShape();
     vertex(x1, landscape_y1);
     vertex(x2, landscape_y2);
-    vertex(x2, cam_y);
-    vertex(x1, cam_y);
+    vertex(x2, activity_view_y);
+    vertex(x1, activity_view_y);
     endShape(CLOSE);
     
     // colour bottom part grey
+    /*
+    // TODO: uncomment this after debugging
     color c1 = 50;//235, 222, 52;
     fill(c1, 220);
     stroke(50, 50, 50);
@@ -397,6 +409,7 @@ void draw() {
     vertex(x2, y_max);
     vertex(x1, y_max);
     endShape(CLOSE);
+    */
     
     // colour line yellow
     stroke(235, 222, 52);
@@ -405,6 +418,7 @@ void draw() {
     
     noStroke();
   }
+   
   
   
   
@@ -454,11 +468,7 @@ void mousePressed() {
     
     float halfway = 0.0;
     
-    if(CAMERA_ENABLED) {
-      halfway = cam_x+(cam_w_scaled/2.0);
-    } else {
-      halfway = cam_x+(vid_w_scaled/2.0);
-    }
+    halfway = activity_view_x+(activity_w_scaled/2.0);
     
     if(mouseX < halfway) {
       landscape_y1 = mouseY;
@@ -471,6 +481,11 @@ void mousePressed() {
   
   
 }
+
+
+
+
+
 
 
 void defaultTrackHue() {
@@ -546,12 +561,7 @@ void keyPressed() {
   }
   
   if(key == 'l') {
-    draw_landscape_mode = !draw_landscape_mode;
-    if(draw_landscape_mode) {
-      // reset
-      landscape_y1 = -1;
-      landscape_y2 = -1;
-    }
+    landscape();
   }
   
 }
@@ -626,148 +636,6 @@ void resetTracePoints() {
 
 
 
-
-//////////////////////
-// Detect Functions
-//////////////////////
-
-void detectColors() {
-    
-  for (int i=0; i<hues.length; i++) {
-    
-    if (hues[i] <= 0) continue;
-    
-    opencv.loadImage(src);
-    opencv.useColor(HSB);
-    
-    // <4> Copy the Hue channel of our image into 
-    //     the gray channel, which we process.
-    opencv.setGray(opencv.getH().clone());
-    
-    int hueToDetect = hues[i];
-    //println("index " + i + " - hue to detect: " + hueToDetect);
-    
-    // <5> Filter the image based on the range of 
-    //     hue values that match the object we want to track.
-    opencv.inRange(hueToDetect-rangeWidth/2, hueToDetect+rangeWidth/2);
-    
-    //opencv.dilate();
-    opencv.erode();
-    
-    // TO DO:
-    // Add here some image filtering to detect blobs better
-    
-    // <6> Save the processed image for reference.
-    outputs[i] = opencv.getSnapshot();
-  }
-  
-  // <7> Find contours in our range image.
-  //     Passing 'true' sorts them by descending area.
-  if (outputs[0] != null) {
-    opencv.loadImage(outputs[0]);
-    contours_1 = opencv.findContours(true,true);
-  }
-  
-  if(outputs[1] != null) {
-    opencv.loadImage(outputs[1]);
-    contours_2 = opencv.findContours(true,true);
-  }
-  
-  if(outputs[2] != null) {
-    opencv.loadImage(outputs[2]);
-    contours_3 = opencv.findContours(true,true);
-  }
-  
-}
-
-void displayContoursBoundingBoxes() {
-  
-  kite_pos = false;
-  for(int i=0; i<contours_1.size(); i++) {
-  
-    Contour contour = contours_1.get(i);
-    Rectangle r = contour.getBoundingBox();
-    
-    if (r.width < 10 || r.height < 10)
-      continue;
-    
-    //println("1 [" + i + "]: " + r);
-    color c = colors[0];
-    color c_new = color(red(c), green(c), blue(c), 100);
-    stroke(255, 255, 255, 100);
-    fill(c_new);
-    strokeWeight(2);
-    
-    if(CAMERA_ENABLED) {
-      rect(r.x*cam_scale+cam_x, r.y*cam_scale+cam_y, r.width*cam_scale, r.height*cam_scale);
-    } else {
-      rect(r.x*vid_scale+cam_x, r.y*vid_scale+cam_y, r.width*vid_scale, r.height*vid_scale);
-    }
-    
-    noStroke();
-    
-    if(!kite_pos) {
-      
-      if(CAMERA_ENABLED) {
-        kite_x = (int)(r.x*cam_scale+cam_x);
-        kite_y = (int)(r.y*cam_scale+cam_y);
-        kite_w = (int)(r.width*cam_scale);
-        kite_h = (int)(r.height*cam_scale);
-      } else {
-        kite_x = (int)(r.x*vid_scale+cam_x);
-        kite_y = (int)(r.y*vid_scale+cam_y);
-        kite_w = (int)(r.width*vid_scale);
-        kite_h = (int)(r.height*vid_scale);
-      }
-      
-      addTracePoint(kite_x+(kite_w/2), kite_y+(kite_h/2));
-      
-      kite_pos = true;
-    }
-    
-  }
-  
-  
-  for(int i=0; i<contours_2.size(); i++) {
-  
-    Contour contour = contours_2.get(i);
-    Rectangle r = contour.getBoundingBox();
-    
-    if (r.width < 60 || r.height < 60)
-      continue;
-    
-    //println("2 [" + i + "]: " + r);
-    color c = colors[1];
-    color c_new = color(red(c), green(c), blue(c), 100);
-    stroke(255, 255, 255, 100);
-    fill(c_new);
-    strokeWeight(2);
-    rect(r.x*cam_scale+cam_x, r.y*cam_scale+cam_y, r.width*cam_scale, r.height*cam_scale);
-    noStroke();
-    
-  }
-  
-  
-  for(int i=0; i<contours_3.size(); i++) {
-  
-    Contour contour = contours_3.get(i);
-    Rectangle r = contour.getBoundingBox();
-    
-    if (r.width < 60 || r.height < 60)
-      continue;
-    
-    //println("3 [" + i + "]: " + r);
-    color c = colors[2];
-    color c_new = color(red(c), green(c), blue(c), 100);
-    stroke(255, 255, 255, 100);
-    fill(c_new);
-    strokeWeight(2);
-    rect(r.x*cam_scale+cam_x, r.y*cam_scale+cam_y, r.width*cam_scale, r.height*cam_scale);
-    noStroke();
-    
-  }
-  
-}
 
 
 
