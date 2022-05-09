@@ -11,13 +11,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "stm32f3xx_hal.h"
+#include "pin.h"
 
-
-typedef struct PinStruct {
-	uint16_t pin;
-	uint16_t port;
-	bool state;
-} Pin;
 
 typedef enum ActuatorStateStruct {
   ENABLED,
