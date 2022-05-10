@@ -83,6 +83,8 @@ void Error_Handler(void);
 #define SPI1_MISO_GPIO_Port GPIOA
 #define SPI1_MISOA7_Pin GPIO_PIN_7
 #define SPI1_MISOA7_GPIO_Port GPIOA
+#define SLP_A_Pin GPIO_PIN_2
+#define SLP_A_GPIO_Port GPIOB
 #define LD4_Pin GPIO_PIN_8
 #define LD4_GPIO_Port GPIOE
 #define LD3_Pin GPIO_PIN_9
@@ -107,6 +109,10 @@ void Error_Handler(void);
 #define STEP_A4_GPIO_Port GPIOD
 #define STEP_A3_Pin GPIO_PIN_15
 #define STEP_A3_GPIO_Port GPIOD
+#define END_A1_Pin GPIO_PIN_8
+#define END_A1_GPIO_Port GPIOA
+#define END_A2_Pin GPIO_PIN_9
+#define END_A2_GPIO_Port GPIOA
 #define DM_Pin GPIO_PIN_11
 #define DM_GPIO_Port GPIOA
 #define DP_Pin GPIO_PIN_12

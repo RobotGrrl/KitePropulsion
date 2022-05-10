@@ -25,6 +25,8 @@
 #include "console.h"
 #include <stdbool.h>
 #include "../../Drivers/BSP/STM32F3-Discovery/stm32f3_discovery.h"
+#include "actuator.h"
+#include "pin.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +59,10 @@ uint8_t uart_byte_buf[1];
 input_buf uart_buf;
 bool blink_leds = false;
 
-volatile step_a = 0;
+volatile uint8_t step_a = 0;
+
+Actuator yaw;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,7 +74,7 @@ static void MX_USB_PCD_Init(void);
 static void MX_UART4_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
-
+void pinGo(Pin *p);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -83,7 +88,41 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 	// check which timer triggered this callback
 
-	if (htim == &htim2) { // stepper A
+	if(htim == yaw.htim) { // TODO: does this work?
+
+		if(0 == yaw.step_count) {
+			yaw.pin1->state = true;
+			yaw.pin2->state = true;
+			yaw.pin3->state = false;
+			yaw.pin4->state = false;
+		} else if(1 == yaw.step_count) {
+			yaw.pin1->state = false;
+			yaw.pin2->state = true;
+			yaw.pin3->state = true;
+			yaw.pin4->state = false;
+		} else if(2 == yaw.step_count) {
+			yaw.pin1->state = false;
+			yaw.pin2->state = false;
+			yaw.pin3->state = true;
+			yaw.pin4->state = true;
+		} else if(3 == yaw.step_count) {
+			yaw.pin1->state = true;
+			yaw.pin2->state = false;
+			yaw.pin3->state = false;
+			yaw.pin4->state = true;
+		}
+
+		pinGo(yaw.pin1); // TODO: does this work?
+		pinGo(yaw.pin2);
+		pinGo(yaw.pin3);
+		pinGo(yaw.pin4);
+
+		yaw.step_count++;
+		if(yaw.step_count > 4) yaw.step_count = 0;
+	}
+
+	/*
+	if(htim == &htim2) { // stepper A
 
 		if(0 == step_a) {
 			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_SET);
@@ -110,7 +149,44 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		step_a++;
 		if(step_a > 4) step_a = 0;
 	}
+	*/
 
+}
+
+void setupActuators() {
+
+	// -- A --
+
+	Pin p1 = { STEP_A1_GPIO_Port, STEP_A1_Pin, 0 };
+	Pin p2 = { STEP_A2_GPIO_Port, STEP_A2_Pin, 0 };
+	Pin p3 = { STEP_A3_GPIO_Port, STEP_A3_Pin, 0 };
+	Pin p4 = { STEP_A4_GPIO_Port, STEP_A4_Pin, 0 };
+	Pin p_slp = { SLP_A_GPIO_Port, SLP_A_Pin, 0 };
+	Pin e1 = { END_A1_GPIO_Port, END_A1_Pin, 0 };
+	Pin e2 = { END_A2_GPIO_Port, END_A2_Pin, 0 };
+
+	yaw.pin1 = &p1; // TODO: is this how it goes?
+	yaw.pin2 = &p2;
+	yaw.pin3 = &p3;
+	yaw.pin4 = &p4;
+	yaw.slp = &p_slp;
+	yaw.end1 = &e1;
+	yaw.end2 = &e2;
+
+	yaw.htim = &htim2; // TODO: is this how it goes?
+
+	yaw.step_count = 0;
+
+	// ------
+
+}
+
+void pinGo(Pin *p) {
+	if(p->state == true) {
+		HAL_GPIO_WritePin(p->port, p->pin, GPIO_PIN_SET);
+	} else {
+		HAL_GPIO_WritePin(p->port, p->pin, GPIO_PIN_RESET);
+	}
 }
 
 /* USER CODE END 0 */
@@ -158,6 +234,10 @@ int main(void)
   ConsoleInit();
   input_buf_reset(&uart_buf);
   HAL_UART_Receive_IT(&huart4, uart_byte_buf, 1);
+
+  // enable the stepper motor driver A by driving pin high
+  HAL_GPIO_WritePin(SLP_A_GPIO_Port, SLP_A_Pin, GPIO_PIN_SET);
+
   while (1)
   {
 
@@ -479,13 +559,16 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, CS_I2C_SPI_Pin|LD4_Pin|LD3_Pin|LD5_Pin
                           |LD7_Pin|LD9_Pin|LD10_Pin|LD8_Pin
                           |LD6_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(SLP_A_GPIO_Port, SLP_A_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, STEP_A2_Pin|STEP_A1_Pin|STEP_A4_Pin|STEP_A3_Pin, GPIO_PIN_RESET);
@@ -509,11 +592,18 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : B1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin;
+  /*Configure GPIO pins : B1_Pin END_A1_Pin END_A2_Pin */
+  GPIO_InitStruct.Pin = B1_Pin|END_A1_Pin|END_A2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : SLP_A_Pin */
+  GPIO_InitStruct.Pin = SLP_A_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SLP_A_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : STEP_A2_Pin STEP_A1_Pin STEP_A4_Pin STEP_A3_Pin */
   GPIO_InitStruct.Pin = STEP_A2_Pin|STEP_A1_Pin|STEP_A4_Pin|STEP_A3_Pin;

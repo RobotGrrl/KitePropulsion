@@ -1,6 +1,8 @@
 /*
  * pin.h
  *
+ * Adapter
+ *
  *  Created on: May 9, 2022
  *      Author: Erin
  */
@@ -13,5 +15,6 @@ typedef struct PinStruct {
 	uint16_t port;
 	bool state;
 } Pin;
+
 
 #endif /* INC_PIN_H_ */
