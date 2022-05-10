@@ -395,3 +395,11 @@ String formatTimeStr() {
 int getActivityViewWidth() {
   return activity_w_scaled;
 }
+
+int getActivityViewMappedX(int x) {
+  return (int)((float)x*activity_scale)+activity_view_x;
+}
+
+int getActivityViewMappedY(int y) {
+  return (int)((float)y*activity_scale)+activity_view_y;
+}

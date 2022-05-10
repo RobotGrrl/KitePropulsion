@@ -1,3 +1,11 @@
+/*
+ * notes to self
+ * landscape_y1 & y2 are absolute (mouseY)
+ *
+ * the filter is evaluating based on relative units to activity view
+ * the drawing is based on absolute units
+ */
+
 
 // check if there is a landscape
 boolean landscapeDrawn() {
@@ -19,11 +27,13 @@ void landscape() {
   
 }
 
+
 float landscapeLineSlope() {
   
   float slope = 0;
-  float rise = (float)( (landscape_y1*activity_scale)-activity_view_y - (landscape_y2*activity_scale)-activity_view_y );
-  float run = (float)( (activity_view_x*activity_scale) - getActivityViewWidth() );
+  //float rise = (float)( absoluteToRelativeActivityView_Y(landscape_y1) - absoluteToRelativeActivityView_Y(landscape_y2) );  
+  float rise = landscape_y1-landscape_y2;
+  float run = (float)( (activity_view_x) - (getActivityViewWidth()+activity_view_x) );  
   slope = rise / run;  
   
   return slope;
@@ -32,12 +42,45 @@ float landscapeLineSlope() {
 
 int landscapeLineY(int x) {
   
-  float kx = ((float)x)*activity_scale;
-  
   // y=mx+b
-  float mx = (float)(landscapeLineSlope()*kx);
-  float the_y = mx + landscape_y1 - (activity_view_y*2.5); // 2.5 fudge factor
-  int y = (int)the_y;
+  //float mx = landscapeLineSlope()*(float)x;
+  //float b = (float)absoluteToRelativeActivityView_Y(landscape_y1);
+  
+  float mx = landscapeLineSlope()*(float)x;
+  float b = landscape_y1;
+  
+  int y = (int)(mx+b);
   
   return y;
+}
+
+
+
+float landscapeLineSlopeRelative() {
+  
+  float slope = 0;
+  float rise = (float)( absoluteToRelativeActivityView_Y(landscape_y1) - absoluteToRelativeActivityView_Y(landscape_y2) );  
+  //float rise = landscape_y1-landscape_y2;
+  float run = (float)( (activity_view_x) - (getActivityViewWidth()+activity_view_x) );  
+  slope = rise / run;  
+  
+  return slope;
+}
+
+
+int landscapeLineYRelative(int x) {
+  
+  // y=mx+b
+  float mx = landscapeLineSlopeRelative()*(float)x;
+  float b = (float)absoluteToRelativeActivityView_Y(landscape_y1);
+  int y = (int)(mx+b);
+  
+  return y;
+}
+
+
+
+int absoluteToRelativeActivityView_Y(int p) {
+  int a = (int)((float)p*activity_scale)-activity_view_y;
+  return a;
 }

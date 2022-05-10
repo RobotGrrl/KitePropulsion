@@ -55,57 +55,56 @@ void detectColors() {
 void displayContoursBoundingBoxes() {
   
   kite_pos = false;
-  for(int i=0; i<contours_1.size(); i++) {
-  //for(int i=0; i<1; i++) {
+  //for(int i=0; i<contours_1.size(); i++) {
+  for(int i=0; i<1; i++) {
   
     Contour contour = contours_1.get(i);
     Rectangle r = contour.getBoundingBox();
     
+    // filter based on size
     if (r.width < 10 || r.height < 10) {
       continue;
     }
     
     
+    // filter based on landscape
     if(landscapeDrawn()) {
       
       // check the x&y below the landscape 
       
-      if( (int)(r.y*activity_scale) > landscapeLineY( (int)(r.x*activity_scale) )) {
-        println("do not display");
+      //print( getActivityViewMappedY(r.y) );
+      //print(" > ");
+      //print( landscapeLineY( getActivityViewMappedX(r.x) ) );
+      
+      //if( getActivityViewMappedY(r.y) > landscapeLineYRelative( getActivityViewMappedX(r.x) )) {
+      if( r.y+10 > landscapeLineYRelative( r.x+activity_view_x )) {
+        //println(" : do not display");
         continue;
+      } else {
+        //println(""); 
       }
       
     }
     
     
-    //println("1 [" + i + "]: " + r);
+    // draw the rectangle
     color c = colors[0];
     color c_new = color(red(c), green(c), blue(c), 100);
     stroke(255, 255, 255, 100);
     fill(c_new);
     strokeWeight(2);
-    
-    if(CAMERA_ENABLED) {
-      rect(r.x*cam_scale+activity_view_x, r.y*cam_scale+activity_view_y, r.width*cam_scale, r.height*cam_scale);
-    } else {
-      rect(r.x*vid_scale+activity_view_x, r.y*vid_scale+activity_view_y, r.width*vid_scale, r.height*vid_scale);
-    }
-    
+    //rect(r.x*activity_scale+activity_view_x, r.y*activity_scale+activity_view_y, r.width*activity_scale, r.height*activity_scale);
+    rect(getActivityViewMappedX(r.x), getActivityViewMappedY(r.y), r.width*activity_scale, r.height*activity_scale);
     noStroke();
     
+    
+    // add the tracepoint - default to the 1st contour in array
     if(!kite_pos) {
       
-      if(CAMERA_ENABLED) {
-        kite_x = (int)(r.x*cam_scale+activity_view_x);
-        kite_y = (int)(r.y*cam_scale+activity_view_y);
-        kite_w = (int)(r.width*cam_scale);
-        kite_h = (int)(r.height*cam_scale);
-      } else {
-        kite_x = (int)(r.x*vid_scale+activity_view_x);
-        kite_y = (int)(r.y*vid_scale+activity_view_y);
-        kite_w = (int)(r.width*vid_scale);
-        kite_h = (int)(r.height*vid_scale);
-      }
+      kite_x = (int)(getActivityViewMappedX(r.x));
+      kite_y = (int)(getActivityViewMappedY(r.y));
+      kite_w = (int)(r.width*activity_scale);
+      kite_h = (int)(r.height*activity_scale);
       
       addTracePoint(kite_x+(kite_w/2), kite_y+(kite_h/2));
       
