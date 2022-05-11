@@ -40,6 +40,7 @@ typedef struct ActuatorStruct
     uint8_t step_count;      // count to 4 to switch which pins are enabled
     uint16_t step_time;      // amount of time in ms between steps
 
+    bool dir;
     uint16_t position;
     const uint16_t home_pos;
     const uint16_t min_pos;

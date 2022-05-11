@@ -74,6 +74,7 @@ static void MX_USB_PCD_Init(void);
 static void MX_UART4_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
+void setupActuators(void);
 void pinGo(Pin *p);
 /* USER CODE END PFP */
 
@@ -88,6 +89,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 	// check which timer triggered this callback
 
+	/*
 	if(htim == yaw.htim) { // TODO: does this work?
 
 		if(0 == yaw.step_count) {
@@ -120,26 +122,27 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		yaw.step_count++;
 		if(yaw.step_count > 4) yaw.step_count = 0;
 	}
+	*/
 
-	/*
+
 	if(htim == &htim2) { // stepper A
 
-		if(0 == step_a) {
+		if(step_a == 0) {
 			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(STEP_A4_GPIO_Port, STEP_A4_Pin, GPIO_PIN_RESET);
-		} else if(1 == step_a) {
+		} else if(step_a == 1) {
 			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(STEP_A4_GPIO_Port, STEP_A4_Pin, GPIO_PIN_RESET);
-		} else if(2 == step_a) {
+		} else if(step_a == 2) {
 			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(STEP_A4_GPIO_Port, STEP_A4_Pin, GPIO_PIN_SET);
-		} else if(3 == step_a) {
+		} else if(step_a == 3) {
 			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_RESET);
@@ -147,13 +150,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		}
 
 		step_a++;
-		if(step_a > 4) step_a = 0;
+		if(step_a >= 4) step_a = 0;
 	}
-	*/
+
+
 
 }
 
-void setupActuators() {
+void setupActuators(void) {
 
 	// -- A --
 
@@ -176,6 +180,9 @@ void setupActuators() {
 	yaw.htim = &htim2; // TODO: is this how it goes?
 
 	yaw.step_count = 0;
+
+	// enable the stepper motor driver A by driving pin high
+	HAL_GPIO_WritePin(p_slp.port, p_slp.pin, GPIO_PIN_SET);
 
 	// ------
 
@@ -235,11 +242,46 @@ int main(void)
   input_buf_reset(&uart_buf);
   HAL_UART_Receive_IT(&huart4, uart_byte_buf, 1);
 
+  //setupActuators();
+
   // enable the stepper motor driver A by driving pin high
   HAL_GPIO_WritePin(SLP_A_GPIO_Port, SLP_A_Pin, GPIO_PIN_SET);
 
   while (1)
   {
+
+
+
+
+  	/*
+  	if(step_a == 0) {
+			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A4_GPIO_Port, STEP_A4_Pin, GPIO_PIN_RESET);
+		} else if(step_a == 1) {
+			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A4_GPIO_Port, STEP_A4_Pin, GPIO_PIN_RESET);
+		} else if(step_a == 2) {
+			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A4_GPIO_Port, STEP_A4_Pin, GPIO_PIN_SET);
+		} else if(step_a == 3) {
+			HAL_GPIO_WritePin(STEP_A1_GPIO_Port, STEP_A1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(STEP_A2_GPIO_Port, STEP_A2_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A3_GPIO_Port, STEP_A3_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(STEP_A4_GPIO_Port, STEP_A4_Pin, GPIO_PIN_SET);
+		}
+
+		step_a++;
+		if(step_a >= 4) step_a = 0;
+  	HAL_Delay(10);
+		*/
+
+
 
   	// new
   	if(input_buf_ready(&uart_buf)) {
@@ -440,9 +482,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 100;
+  htim2.Init.Prescaler = 48000;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 8000;
+  htim2.Init.Period = 10;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
