@@ -325,12 +325,13 @@ void draw() {
         continue;
       }
       fill(144, 96, 214);
-      ellipse(trace_x[i], trace_y[i], 15, 15);
+      ellipse(trace_x[i], trace_y[i], 1, 1);
       stroke(0);
       if(i>0) line(trace_x[i], trace_y[i], trace_x[i-1], trace_y[i-1]);
       noStroke();
     }
   }
+  
   
   
   drawStatusLeds();

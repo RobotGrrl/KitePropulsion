@@ -35,6 +35,7 @@ float landscapeLineSlope() {
   //float rise = (float)( absoluteToRelativeActivityView_Y(landscape_y1) - absoluteToRelativeActivityView_Y(landscape_y2) );  
   float rise = landscape_y1-landscape_y2;
   float run = (float)( (activity_view_x) - (getActivityViewWidth()+activity_view_x) );  
+  //float run = (float)( getActivityViewWidth() );  
   slope = rise / run;  
   
   return slope;
@@ -63,6 +64,7 @@ float landscapeLineSlopeRelative() {
   float rise = (float)( absoluteToRelativeActivityView_Y(landscape_y1) - absoluteToRelativeActivityView_Y(landscape_y2) );  
   //float rise = landscape_y1-landscape_y2;
   float run = (float)( (activity_view_x) - (getActivityViewWidth()+activity_view_x) );  
+  //float run = (float)( getActivityViewWidth() );
   slope = rise / run;  
   
   return slope;
@@ -73,7 +75,7 @@ int landscapeLineYRelative(int x) {
   
   // y=mx+b
   float mx = landscapeLineSlopeRelative()*(float)x;
-  float b = (float)absoluteToRelativeActivityView_Y(landscape_y1);
+  float b = landscape_y1;//(float)absoluteToRelativeActivityView_Y(landscape_y1);
   int y = (int)(mx+b);
   
   return y;
@@ -82,6 +84,6 @@ int landscapeLineYRelative(int x) {
 
 
 int absoluteToRelativeActivityView_Y(int p) {
-  int a = (int)((float)p*activity_scale)-activity_view_y;
+  int a = (int)((float)p*activity_scale)+activity_view_y;
   return a;
 }
