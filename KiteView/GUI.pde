@@ -403,3 +403,29 @@ int getActivityViewMappedX(int x) {
 int getActivityViewMappedY(int y) {
   return (int)((float)y*activity_scale)+activity_view_y;
 }
+
+/*
+what is needed:
+mouseX (absolute) -> point relative to activity view
+activity view -> absolute point
+*/
+
+int absToActX(int x) {
+  int r = (int)((float)x*activity_scale)+activity_view_x;
+  return r;
+}
+
+int absToActY(int y) {
+  int r = (int)((float)y*activity_scale)+activity_view_y;
+  return r;
+}
+
+int actToAbsX(int n) {
+  //int r = ;
+  return 0;
+}
+
+int actToAbsY(int n) {
+  
+  return 0;
+}

@@ -76,8 +76,10 @@ void displayContoursBoundingBoxes() {
       //print(" > ");
       //print( landscapeLineY( getActivityViewMappedX(r.x) ) );
       
+      println(r.x);
+      
       //if( getActivityViewMappedY(r.y) > landscapeLineYRelative( getActivityViewMappedX(r.x) )) {
-      if( r.y+10 > landscapeLineYRelative( r.x+activity_view_x )) {
+      if( getActivityViewMappedY(r.y)-10 > landscapeLineYRelative( r.x )) {
         //println(" : do not display");
         continue;
       } else {

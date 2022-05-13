@@ -381,6 +381,7 @@ void draw() {
     */
     
     
+    // draw in blue the landscape line func result
     for(int i=activity_view_x; i<getActivityViewWidth()+activity_view_x; i++) {
       fill(0,0,255);
       ellipse(i, landscapeLineY( i-activity_view_x ), 5, 5);
