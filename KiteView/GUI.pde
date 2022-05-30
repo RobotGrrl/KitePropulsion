@@ -73,6 +73,70 @@ void guiSetup() {
 }
 
 
+void drawTitleGui() {
+  
+  fill(255);
+  textFont(font_lg, 48);
+  text("KiteView", 20, 60);
+  textFont(font_md, 24);
+  
+  if(connected) {
+    text("connected", 20, 90);  
+  } else {
+    text("not connected", 20, 90);
+  }
+  
+  text(formatTimeStr(), 20, height-50);
+  text(frameRate, 10, height-20);
+  
+  String str = "";
+  float px = 0.0;
+  textFont(font_sm, 16);
+  
+  px = ( (float)(kite_x-activity_view_x) / (float)cam_w )*100;
+  str = ("kite x: " + kite_x + " px (" + nf(px, 0, 2) + "%)");
+  text(str, 20, 120);
+
+  px = ( (float)(kite_y-activity_view_y) / (float)cam_h )*100;
+  str = ("kite y: " + kite_y + " px (" + nf(px, 0, 2) + "%)");
+  text(str, 20, 140);
+  
+  px = ( (float)kite_w / (float)cam_w)*100.0;
+  str = ("kite w: " + kite_w + " px (" + nf(px, 0, 2) + "%)");
+  text(str, 20, 160);
+  
+  px = ( (float)kite_h / (float)cam_h )*100.0;
+  str = ("kite h: " + kite_h + " px (" + nf(px, 0, 2) + "%)");
+  text(str, 20, 180);
+  
+  str = ("hold 1,2,3 and click to select hue");
+  text(str, 20, 200);
+  
+  str = ("z,x,c,v to simulate leds");
+  text(str, 20, 220);
+  
+  str = ("l to set landscape");
+  text(str, 20, 240);
+  
+  
+  
+  int start_x_actuators = 275;
+  fill(255);
+  textFont(font_md, 24);
+  text("Pitch", start_x_actuators, 525);
+  
+  fill(255);
+  textFont(font_md, 24);
+  text("Yaw", start_x_actuators+250, 525);
+  
+  fill(255);
+  textFont(font_md, 24);
+  text("Reel", start_x_actuators+250+250, 525);
+  
+  
+}
+
+
 void pitchGui() {
  
   int startx = 275-30;
