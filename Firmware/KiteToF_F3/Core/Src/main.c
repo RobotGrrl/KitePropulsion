@@ -70,6 +70,8 @@ VL53L0X_Dev_t VL53L0XDev = {
 		.I2cDevAddr=0x29 // EK: documentation says address is 0x29, why did the code say 0x52?
 };
 
+int range;
+int range_mm;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -221,6 +223,33 @@ void ResetAndDetectSensor(int SetDisplay){
     }
 }
 
+VL53L0X_Error WaitStopCompleted(VL53L0X_DEV Dev) {
+    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
+    uint32_t StopCompleted=0;
+    uint32_t LoopNb;
+
+    // Wait until it finished
+    // use timeout to avoid deadlock
+    if (Status == VL53L0X_ERROR_NONE) {
+        LoopNb = 0;
+        do {
+            Status = VL53L0X_GetStopCompletedStatus(Dev, &StopCompleted);
+            if ((StopCompleted == 0x00) || Status != VL53L0X_ERROR_NONE) {
+                break;
+            }
+            LoopNb = LoopNb + 1;
+            VL53L0X_PollingDelay(Dev);
+        } while (LoopNb < VL53L0X_DEFAULT_MAX_LOOP);
+
+        if (LoopNb >= VL53L0X_DEFAULT_MAX_LOOP) {
+            Status = VL53L0X_ERROR_TIME_OUT;
+        }
+
+    }
+
+    return Status;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -254,7 +283,72 @@ int main(void)
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
 
-  ResetAndDetectSensor(1); // EK TODO: the parameter SetDisplay doesn't matter
+
+  //ResetAndDetectSensor(1); // EK TODO: the parameter SetDisplay doesn't matter
+
+  // EK test1
+  HAL_StatusTypeDef status;
+	uint8_t pData;
+	status = HAL_I2C_Mem_Read(&hi2c2, 0x52, 0xC0, 1, &pData, 1, HAL_TIMEOUT);
+	// pData should be 0xEE
+	if(status == HAL_OK) {
+		printf("good");
+	}
+	//--
+
+  // EK test2
+  VL53L0X_Dev_t *pDev;
+	pDev = &VL53L0XDev;
+	pDev->I2cDevAddr = 0x52;
+	pDev->Present = 0;
+
+  int status2 = VL53L0X_DataInit(pDev);
+	if( status2 == 0 ){
+			pDev->Present = 1;
+	}
+	else{
+			printf("VL53L0X_DataInit fail\n");
+	}
+	printf("VL53L0X %d Present and initiated to final 0x%x\n", pDev->Id, pDev->I2cDevAddr);
+	pDev->Present = 1;
+	//--
+
+	// EK test3
+	uint8_t VhvSettings;
+	uint8_t PhaseCal;
+	uint32_t refSpadCount;
+	uint8_t isApertureSpads;
+	VL53L0X_RangingMeasurementData_t RangingMeasurementData;
+	//int range;
+
+	// Initialize the device in continuous ranging mode
+	VL53L0X_StaticInit(pDev);
+	VL53L0X_PerformRefCalibration(pDev, &VhvSettings, &PhaseCal);
+	VL53L0X_PerformRefSpadManagement(pDev, &refSpadCount, &isApertureSpads);
+	//VL53L0X_SetInterMeasurementPeriodMilliSeconds(pDev, 250); // Program continuous mode Inter-Measurement period in milliseconds
+	//VL53L0X_SetDeviceMode(pDev, VL53L0X_DEVICEMODE_CONTINUOUS_RANGING);
+	VL53L0X_SetInterMeasurementPeriodMilliSeconds(pDev, 100);
+	VL53L0X_SetDeviceMode(pDev, VL53L0X_DEVICEMODE_CONTINUOUS_TIMED_RANGING);
+
+	// Start continuous ranging
+	VL53L0X_StartMeasurement(pDev);
+
+	/*
+	for(uint8_t i=0; i<5; i++) {
+		VL53L0X_GetRangingMeasurementData(pDev, &RangingMeasurementData);
+		range = (int)RangingMeasurementData.RangeMilliMeter/10;
+		HAL_Delay(100);
+	}
+
+	// Stop continuous ranging
+	VL53L0X_StopMeasurement(pDev);
+
+	// Ensure device is ready for other commands
+	WaitStopCompleted(pDev);
+	*/
+	//--
+
+
 
   /* USER CODE END 2 */
 
@@ -262,6 +356,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+  	VL53L0X_GetRangingMeasurementData(pDev, &RangingMeasurementData);
+		range = (int)RangingMeasurementData.RangeMilliMeter/10; // cm
+		range_mm = (int)RangingMeasurementData.RangeMilliMeter; // mm
+		//HAL_Delay(1000);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
