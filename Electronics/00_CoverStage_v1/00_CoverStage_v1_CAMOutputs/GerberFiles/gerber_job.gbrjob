@@ -1,7 +1,7 @@
 {
     "Header": {
         "Comment": "All values are metric (mm)",
-        "CreationDate": "2022-07-13T03:12:36Z",
+        "CreationDate": "2022-07-14T03:39:56Z",
         "GenerationSoftware": {
             "Application": "EAGLE",
             "Vendor": "Autodesk",
@@ -17,7 +17,7 @@
         },
         "Owner": "Erin RobotGrrl <erin@robotgrrl.com>",
         "Size": {
-            "X": 100.0002,
+            "X": 119.999997,
             "Y": 80
         }
     }
