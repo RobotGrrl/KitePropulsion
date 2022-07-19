@@ -229,7 +229,7 @@ LETTER landscape</description>
 <sheets>
 <sheet>
 <plain>
-<text x="151.638" y="25.654" size="1.778" layer="95">Hippo-PS Cover Stage
+<text x="151.638" y="25.654" size="1.778" layer="95">Hippo-PD Cover Stage
 Designed by: Erin Kennedy
 July 12, 2022 </text>
 </plain>
