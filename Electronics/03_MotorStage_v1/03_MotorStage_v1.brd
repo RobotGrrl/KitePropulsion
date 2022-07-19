@@ -324,7 +324,7 @@
 <text x="65.024" y="93.091" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">gnd</text>
 <text x="51.562" y="93.472" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">gnd</text>
 <text x="43.434" y="93.345" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">V+</text>
-<text x="28.702" y="35.052" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">hippo-ps motor v1</text>
+<text x="28.702" y="35.052" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">hippo-pd motor v1</text>
 <text x="28.702" y="62.103" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">ek robotgrrl Jul 9, '22</text>
 </plain>
 <libraries>

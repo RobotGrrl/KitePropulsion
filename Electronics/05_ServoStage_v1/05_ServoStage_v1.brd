@@ -315,7 +315,7 @@
 <text x="97.536" y="91.821" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">out2</text>
 <text x="88.9" y="91.948" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">out1</text>
 <text x="73.279" y="92.456" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">gnd</text>
-<text x="28.702" y="36.83" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">hippo-ps sbc v1</text>
+<text x="28.702" y="34.798" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">hippo-pd servo v1</text>
 <text x="28.702" y="62.103" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">ek robotgrrl Jul 13, '22</text>
 <text x="81.915" y="92.075" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">np</text>
 <text x="58.293" y="97.028" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">out1</text>

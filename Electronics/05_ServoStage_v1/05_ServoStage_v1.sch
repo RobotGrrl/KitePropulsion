@@ -1450,7 +1450,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="154.94" y="175.26" size="2.54" layer="95">Header Interface to Power Management Board</text>
 <text x="172.72" y="114.3" size="2.54" layer="95">Output of Regulators</text>
 <text x="53.34" y="35.56" size="2.54" layer="95">Brass Standoffs</text>
-<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PS Servo Stage
+<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PD Servo Stage
 Designed by: Erin Kennedy
 July 14, 2022</text>
 </plain>
@@ -1857,7 +1857,7 @@ July 14, 2022</text>
 <sheet>
 <plain>
 <text x="55.88" y="170.18" size="2.54" layer="95">Linear Regulator (5.2V)</text>
-<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PS Servo Stage
+<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PD Servo Stage
 Designed by: Erin Kennedy
 July 14, 2022</text>
 <text x="170.18" y="119.38" size="2.54" layer="95">Testpoints (Switching V+, Battery In+)</text>

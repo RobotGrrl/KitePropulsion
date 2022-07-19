@@ -1448,7 +1448,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="175.26" y="66.04" size="2.54" layer="95">Brass Standoffs</text>
 <text x="10.16" y="66.04" size="2.54" layer="95">Testpoints (Switching V+, Battery In+)</text>
 <text x="15.24" y="111.76" size="2.54" layer="95">Output of Switching Regulator</text>
-<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PS Motor Stage
+<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PD Motor Stage
 Designed by: Erin Kennedy
 July 9, 2022</text>
 </plain>
@@ -1799,7 +1799,7 @@ July 9, 2022</text>
 <sheet>
 <plain>
 <text x="91.44" y="175.26" size="2.54" layer="95">Linear Regulators for Motor Drivers</text>
-<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PS Motor Stage
+<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PD Motor Stage
 Designed by: Erin Kennedy
 July 9, 2022</text>
 </plain>

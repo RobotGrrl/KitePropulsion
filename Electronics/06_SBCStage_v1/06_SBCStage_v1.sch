@@ -2741,7 +2741,7 @@ CONN_03
 <text x="167.64" y="124.46" size="2.54" layer="95">Output of Regulators</text>
 <text x="175.26" y="66.04" size="2.54" layer="95">Brass Standoffs</text>
 <text x="10.16" y="66.04" size="2.54" layer="95">Testpoints (Switching V+, Battery In+)</text>
-<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PS SBC Stage
+<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PD SBC Stage
 Designed by: Erin Kennedy
 July 13, 2022</text>
 </plain>
@@ -3109,7 +3109,7 @@ July 13, 2022</text>
 <sheet>
 <plain>
 <text x="55.88" y="170.18" size="2.54" layer="95">Linear Regulator (5V)</text>
-<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PS Motor Stage
+<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PD Motor Stage
 Designed by: Erin Kennedy
 July 9, 2022</text>
 </plain>

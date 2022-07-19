@@ -315,7 +315,7 @@
 <text x="96.774" y="92.456" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">V+</text>
 <text x="88.265" y="92.456" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">out1</text>
 <text x="80.264" y="92.456" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">gnd</text>
-<text x="28.702" y="36.83" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">hippo-ps sbc v1</text>
+<text x="28.702" y="36.83" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">hippo-pd sbc v1</text>
 <text x="28.702" y="62.103" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">ek robotgrrl Jul 13, '22</text>
 </plain>
 <libraries>
