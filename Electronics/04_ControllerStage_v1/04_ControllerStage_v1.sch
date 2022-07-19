@@ -1482,7 +1482,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="154.94" y="175.26" size="2.54" layer="95">Header Interface to Power Management Board</text>
 <text x="81.28" y="121.92" size="2.54" layer="95">Output of Regulators</text>
 <text x="180.34" y="66.04" size="2.54" layer="95">Brass Standoffs</text>
-<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PS Controller Stage
+<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PD Controller Stage
 Designed by: Erin Kennedy
 July 16, 2022</text>
 <text x="182.88" y="124.46" size="2.54" layer="95">LEDs</text>
@@ -1688,7 +1688,7 @@ July 16, 2022</text>
 <label x="200.66" y="55.88" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
-<net name="SIG_NP" class="0">
+<net name="SIG1" class="0">
 <segment>
 <pinref part="J3" gate="G$1" pin="P$4"/>
 <wire x1="175.26" y1="157.48" x2="170.18" y2="157.48" width="0.1524" layer="91"/>
@@ -1733,13 +1733,6 @@ July 16, 2022</text>
 <pinref part="J3" gate="G$1" pin="P$1"/>
 <wire x1="200.66" y1="157.48" x2="205.74" y2="157.48" width="0.1524" layer="91"/>
 <label x="205.74" y="157.48" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
-<net name="SIG1" class="0">
-<segment>
-<pinref part="J3" gate="G$1" pin="P$3"/>
-<wire x1="200.66" y1="147.32" x2="205.74" y2="147.32" width="0.1524" layer="91"/>
-<label x="205.74" y="147.32" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="SIG2" class="0">
@@ -1787,12 +1780,19 @@ July 16, 2022</text>
 <wire x1="127" y1="86.36" x2="127" y2="99.06" width="0.1524" layer="91"/>
 </segment>
 </net>
+<net name="SIG3" class="0">
+<segment>
+<pinref part="J3" gate="G$1" pin="P$3"/>
+<wire x1="200.66" y1="147.32" x2="205.74" y2="147.32" width="0.1524" layer="91"/>
+<label x="205.74" y="147.32" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
 </nets>
 </sheet>
 <sheet>
 <plain>
 <text x="50.8" y="73.66" size="2.54" layer="95">Linear Regulator (5.0V)</text>
-<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PS Controller Stage
+<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PD Controller Stage
 Designed by: Erin Kennedy
 July 16, 2022</text>
 <text x="165.1" y="73.66" size="2.54" layer="95">Testpoints (Switching V+, Battery In+)</text>
