@@ -3,7 +3,7 @@
 <eagle version="9.6.2">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="5" unitdist="mil" unit="mil" style="dots" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
@@ -305,10 +305,10 @@
 <text x="108.712" y="32.258" size="2.032" layer="21" font="vector" ratio="20">GND-</text>
 <text x="29.972" y="82.296" size="2.032" layer="21" font="vector" ratio="20">GND-</text>
 <text x="110.363" y="82.296" size="2.032" layer="21" font="vector" ratio="20">IN+</text>
-<text x="24.892" y="28.067" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">IN+</text>
+<text x="34.417" y="32.258" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">IN+</text>
 <text x="113.538" y="32.385" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">GND-</text>
 <text x="113.919" y="82.423" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">IN+</text>
-<text x="25.019" y="86.741" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">GND-</text>
+<text x="36.957" y="82.169" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">GND-</text>
 <text x="76.073" y="29.845" size="1.524" layer="22" font="vector" ratio="20" rot="MR270">swtch</text>
 <text x="68.199" y="29.337" size="1.524" layer="22" font="vector" ratio="20" rot="MR270">out1</text>
 <text x="161.417" y="47.498" size="1.524" layer="22" font="vector" ratio="20" rot="MR270">+</text>
@@ -322,6 +322,8 @@
 <text x="52.324" y="97.028" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">out2</text>
 <text x="48.387" y="97.028" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">np</text>
 <text x="42.799" y="97.028" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">gnd</text>
+<text x="28.702" y="53.213" size="1.524" layer="21" font="vector" ratio="20" rot="SR270">hippo-pd servo v1</text>
+<text x="28.702" y="85.598" size="1.524" layer="21" font="vector" ratio="20" rot="SR270">ek robotgrrl Jul 13, '22</text>
 </plain>
 <libraries>
 <library name="Hippo-PS">
