@@ -3,7 +3,7 @@
 <eagle version="9.6.2">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="10" unitdist="mil" unit="mil" style="dots" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
@@ -327,6 +327,12 @@
 <text x="112.014" y="73.914" size="1.778" layer="21" font="vector" ratio="14" rot="R270">smps</text>
 <text x="112.268" y="81.534" size="1.778" layer="21" font="vector" ratio="14" rot="R270">7805</text>
 <text x="34.29" y="85.344" size="1.778" layer="21" font="vector" ratio="14" rot="R180">Gnd</text>
+<text x="114.3" y="31.75" size="1.778" layer="22" font="vector" ratio="14" rot="MR0">Gnd</text>
+<text x="34.29" y="83.566" size="1.778" layer="22" font="vector" ratio="14" rot="MR0">Gnd</text>
+<text x="33.02" y="31.75" size="1.778" layer="22" font="vector" ratio="14" rot="MR0">+</text>
+<text x="112.776" y="83.312" size="1.778" layer="22" font="vector" ratio="14" rot="MR0">+</text>
+<text x="28.956" y="63.754" size="1.016" layer="22" font="vector" ratio="14" rot="SMR90">hippo-pd input v1</text>
+<text x="28.702" y="37.084" size="1.016" layer="22" font="vector" ratio="14" rot="SMR90">ek robotgrrl jul 10, `22</text>
 </plain>
 <libraries>
 <library name="Hippo-PS">
