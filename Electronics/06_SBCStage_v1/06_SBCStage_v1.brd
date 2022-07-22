@@ -3,7 +3,7 @@
 <eagle version="9.6.2">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="5" unitdist="mil" unit="mil" style="dots" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
@@ -305,10 +305,10 @@
 <text x="108.712" y="32.258" size="2.032" layer="21" font="vector" ratio="20">GND-</text>
 <text x="29.972" y="82.296" size="2.032" layer="21" font="vector" ratio="20">GND-</text>
 <text x="110.363" y="82.296" size="2.032" layer="21" font="vector" ratio="20">IN+</text>
-<text x="24.892" y="28.067" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">IN+</text>
+<text x="34.544" y="32.258" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">IN+</text>
 <text x="113.538" y="32.385" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">GND-</text>
 <text x="113.919" y="82.423" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">IN+</text>
-<text x="25.019" y="86.741" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">GND-</text>
+<text x="36.449" y="82.296" size="2.032" layer="22" font="vector" ratio="20" rot="MR0">GND-</text>
 <text x="76.073" y="29.845" size="1.524" layer="22" font="vector" ratio="20" rot="MR270">swtch</text>
 <text x="68.199" y="29.337" size="1.524" layer="22" font="vector" ratio="20" rot="MR270">out1</text>
 <text x="161.417" y="47.498" size="1.524" layer="22" font="vector" ratio="20" rot="MR270">+</text>
@@ -317,6 +317,8 @@
 <text x="80.264" y="92.456" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">gnd</text>
 <text x="28.702" y="36.83" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">hippo-pd sbc v1</text>
 <text x="28.702" y="62.103" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">ek robotgrrl Jul 13, '22</text>
+<text x="28.702" y="53.086" size="1.524" layer="21" font="vector" ratio="20" rot="SR270">hippo-pd sbc v1</text>
+<text x="28.702" y="85.598" size="1.524" layer="21" font="vector" ratio="20" rot="SR270">ek robotgrrl Jul 13, '22</text>
 </plain>
 <libraries>
 <library name="Hippo-PS">
@@ -1112,7 +1114,6 @@ design rules under a new name.</description>
 <wire x1="53.848" y1="78.994" x2="50.927" y2="78.994" width="0.3048" layer="1"/>
 <wire x1="50.927" y1="78.994" x2="37.338" y2="65.405" width="0.3048" layer="1"/>
 <via x="53.848" y="78.994" extent="1-16" drill="0.35"/>
-<wire x1="54.362" y1="82.296" x2="49.911" y2="77.845" width="1.524" layer="16"/>
 <wire x1="68.022" y1="82.727" x2="77.597" y2="82.727" width="1.524" layer="16"/>
 </signal>
 <signal name="GND">

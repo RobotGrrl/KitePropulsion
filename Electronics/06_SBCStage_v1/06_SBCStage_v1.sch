@@ -3109,9 +3109,9 @@ July 13, 2022</text>
 <sheet>
 <plain>
 <text x="55.88" y="170.18" size="2.54" layer="95">Linear Regulator (5V)</text>
-<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PD Motor Stage
+<text x="149.86" y="25.4" size="1.778" layer="95">Hippo-PD SBC Stage
 Designed by: Erin Kennedy
-July 9, 2022</text>
+July 13, 2022</text>
 </plain>
 <instances>
 <instance part="FRAME2" gate="G$1" x="0" y="0" smashed="yes"/>
