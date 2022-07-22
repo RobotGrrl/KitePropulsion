@@ -1,4 +1,4 @@
-Partlist exported from /Users/frankenteddy/Documents/EAGLE/projects/Hippo-PS/03_MotorStage_v1.sch at 2022-07-09 9:23 PM
+Partlist exported from /Users/frankenteddy/Documents/EAGLE/projects/Hippo-PD/03_MotorStage_v1.sch at 2022-07-22 7:01 PM
 
 Qty Value              Device             Package           Parts                                    Description             AVAILABILITY DESCRIPTION                                                                         MF                MP           PACKAGE                 PRICE PURCHASE-URL                                                 
 4   10 uF              CAPACITOR.1206     1206              C3, C5, C7, C9                                                                                                                                                                                                                                                                              

@@ -3,7 +3,7 @@
 <eagle version="9.6.2">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="5" unitdist="mil" unit="mil" style="dots" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
@@ -326,6 +326,8 @@
 <text x="43.434" y="93.345" size="1.524" layer="22" font="vector" ratio="20" rot="MR180">V+</text>
 <text x="28.702" y="35.052" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">hippo-pd motor v1</text>
 <text x="28.702" y="62.103" size="1.524" layer="22" font="vector" ratio="20" rot="MR90">ek robotgrrl Jul 9, '22</text>
+<text x="28.702" y="53.848" size="1.524" layer="21" font="vector" ratio="20" rot="SR270">hippo-pd motor v1</text>
+<text x="28.702" y="84.836" size="1.524" layer="21" font="vector" ratio="20" rot="SR270">ek robotgrrl Jul 9, '22</text>
 </plain>
 <libraries>
 <library name="Hippo-PS">
