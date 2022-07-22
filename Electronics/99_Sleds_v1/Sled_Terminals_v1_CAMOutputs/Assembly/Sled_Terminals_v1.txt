@@ -1,0 +1,6 @@
+Partlist exported from /Users/frankenteddy/Documents/EAGLE/projects/Hippo-PD/Sled_Terminals_v1.sch at 2022-07-22 7:51 PM
+
+Qty Value              Device             Package           Parts Description             
+1   BARRIER_BLOCK-2PIN BARRIER_BLOCK-2PIN BARRIERBLOCK-2PIN J2    Barrier block connector 
+1   BARRIER_BLOCK-4PIN BARRIER_BLOCK-4PIN BARRIERBLOCK-4PIN J1    Barrier block connector 
+1   XT60               XT60               XT60              U$1   XT60                    

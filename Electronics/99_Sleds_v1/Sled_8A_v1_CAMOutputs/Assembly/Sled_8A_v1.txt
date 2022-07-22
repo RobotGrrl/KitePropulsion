@@ -1,0 +1,5 @@
+Partlist exported from /Users/frankenteddy/Documents/EAGLE/projects/Hippo-PD/Sled_8A_v1.sch at 2022-07-22 7:47 PM
+
+Qty Value              Device             Package           Parts Description             
+1   BARRIER_BLOCK-4PIN BARRIER_BLOCK-4PIN BARRIERBLOCK-4PIN J1    Barrier block connector 
+1   XL4016-DEV         XL4016-DEV         XL4016-DEV        U2                            
