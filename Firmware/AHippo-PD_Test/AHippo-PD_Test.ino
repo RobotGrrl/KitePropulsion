@@ -2,7 +2,10 @@
 #include "Board.h"
 #include "Signal.h"
 
-#define NUM_SIGNALS 19
+#define NUM_SIGNALS 17
+
+struct Signal all_signals[NUM_SIGNALS];
+struct Signal *selected = NULL;
 
 void setup() {
   Serial.begin(9600);
@@ -11,8 +14,25 @@ void setup() {
 
   digitalWrite(LED_PIN, HIGH);
 
-  LED_S03C.pin = LED_S03C_PIN;
-  LED_S03C.pin = LED_S03C_PIN;
+  all_signals[0] = T5V_SIG;
+  all_signals[1] = IN_SIG;
+  all_signals[2] = S03_SIG4;
+  all_signals[3] = S03_SIG3;
+  all_signals[4] = S03_SIG2;
+  all_signals[5] = S03_SIGSMPS;
+  all_signals[6] = S03_SIG1;
+  all_signals[7] = S06_SIG1;
+  all_signals[8] = S06_SIGSMPS;
+  all_signals[9] = S04_SIG1;
+  all_signals[10] = S04_SIG2;
+  all_signals[11] = S04_SIG3;
+  all_signals[12] = S04_SIGSMPS;
+  all_signals[13] = S05_SIGNP;
+  all_signals[14] = S05_SIG2;
+  all_signals[15] = S05_SIG1;
+  all_signals[16] = S05_SIGSMPS;
+
+  
   T5V_SIG.pin = T5V_SIG_PIN;
   IN_SIG.pin = IN_SIG_PIN;
   S03_SIG4.pin = S03_SIG4_PIN;
@@ -31,7 +51,10 @@ void setup() {
   S05_SIG1.pin = S05_SIG1_PIN;
   S05_SIGSMPS.pin = S05_SIGSMPS_PIN;
 
-  
+  // test
+  selected = &all_signals[2];
+  Serial.print(selected->pin);
+
 }
 
 void loop() {
