@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.6.2">
+<eagle version="9.5.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -1327,7 +1327,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="TP2" library="Hippo-PS" deviceset="TP" device=""/>
 <part name="TP3" library="Hippo-PS" deviceset="TP" device=""/>
 <part name="TP4" library="Hippo-PS" deviceset="TP" device=""/>
-<part name="U$2" library="Hippo-PS" deviceset="ELECTROLYTIC_CAP" device="" value="100 uF"/>
+<part name="C11" library="Hippo-PS" deviceset="ELECTROLYTIC_CAP" device="" value="100 uF"/>
 <part name="R9" library="standardparts" deviceset="RESISTOR" device=".1206" value="10K"/>
 <part name="R10" library="standardparts" deviceset="RESISTOR" device=".1206" value="4.7K"/>
 <part name="R11" library="standardparts" deviceset="RESISTOR" device=".1206" value="330"/>
@@ -1336,7 +1336,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="U1" library="Hippo-PS" deviceset="XL4016-DEV" device=""/>
 <part name="J2" library="Hippo-PS" deviceset="BARRIER_BLOCK-5PIN" device=""/>
 <part name="J1" library="Hippo-PS" deviceset="BARRIER_BLOCK-2PIN" device=""/>
-<part name="R1" library="Hippo-PS" deviceset="AZ1084C" device=""/>
+<part name="U2" library="Hippo-PS" deviceset="AZ1084C" device=""/>
 <part name="R2" library="standardparts" deviceset="RESISTOR" device=".1206" value="1K"/>
 <part name="R3" library="standardparts" deviceset="RESISTOR" device=".1206" value="33"/>
 <part name="R4" library="standardparts" deviceset="RESISTOR" device=".1206" value="3.3K"/>
@@ -1358,8 +1358,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND5" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND6" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND7" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="U$1" library="Hippo-PS" deviceset="ELECTROLYTIC_CAP" device="" value="100 uF"/>
-<part name="R14" library="Hippo-PS" deviceset="AZ1084C" device=""/>
+<part name="C12" library="Hippo-PS" deviceset="ELECTROLYTIC_CAP" device="" value="100 uF"/>
+<part name="U3" library="Hippo-PS" deviceset="AZ1084C" device=""/>
 <part name="R15" library="standardparts" deviceset="RESISTOR" device=".1206" value="1K"/>
 <part name="R16" library="standardparts" deviceset="RESISTOR" device=".1206" value="33"/>
 <part name="R17" library="standardparts" deviceset="RESISTOR" device=".1206" value="3.3K"/>
@@ -1380,8 +1380,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND12" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND13" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="FRAME2" library="frames" library_urn="urn:adsk.eagle:library:229" deviceset="LETTER_L" device=""/>
-<part name="U$3" library="Hippo-PS" deviceset="ELECTROLYTIC_CAP" device="" value="100 uF"/>
-<part name="R23" library="Hippo-PS" deviceset="AZ1084C" device=""/>
+<part name="C13" library="Hippo-PS" deviceset="ELECTROLYTIC_CAP" device="" value="100 uF"/>
+<part name="U4" library="Hippo-PS" deviceset="AZ1084C" device=""/>
 <part name="R24" library="standardparts" deviceset="RESISTOR" device=".1206" value="1K"/>
 <part name="R25" library="standardparts" deviceset="RESISTOR" device=".1206" value="33"/>
 <part name="R26" library="standardparts" deviceset="RESISTOR" device=".1206" value="3.3K"/>
@@ -1401,8 +1401,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND17" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND18" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND19" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="U$4" library="Hippo-PS" deviceset="ELECTROLYTIC_CAP" device="" value="100 uF"/>
-<part name="R32" library="Hippo-PS" deviceset="AZ1084C" device=""/>
+<part name="C14" library="Hippo-PS" deviceset="ELECTROLYTIC_CAP" device="" value="100 uF"/>
+<part name="U5" library="Hippo-PS" deviceset="AZ1084C" device=""/>
 <part name="R33" library="standardparts" deviceset="RESISTOR" device=".1206" value="1K"/>
 <part name="R34" library="standardparts" deviceset="RESISTOR" device=".1206" value="33"/>
 <part name="R35" library="standardparts" deviceset="RESISTOR" device=".1206" value="3.3K"/>
@@ -1810,11 +1810,11 @@ July 9, 2022</text>
 <attribute name="SHEET" x="233.68" y="1.27" size="2.54" layer="94"/>
 <attribute name="DRAWING_NAME" x="165.1" y="19.05" size="2.54" layer="94"/>
 </instance>
-<instance part="U$1" gate="G$1" x="71.12" y="76.2" smashed="yes">
+<instance part="C12" gate="G$1" x="71.12" y="76.2" smashed="yes">
 <attribute name="NAME" x="72.263" y="77.1426" size="1.778" layer="95"/>
 <attribute name="VALUE" x="72.263" y="71.6026" size="1.778" layer="96"/>
 </instance>
-<instance part="R14" gate="G$1" x="33.02" y="91.44" smashed="yes"/>
+<instance part="U3" gate="G$1" x="33.02" y="91.44" smashed="yes"/>
 <instance part="R15" gate="G$1" x="53.34" y="81.28" smashed="yes" rot="R270">
 <attribute name="NAME" x="54.61" y="82.55" size="1.016" layer="95" rot="MR180"/>
 <attribute name="VALUE" x="54.61" y="80.01" size="1.016" layer="96"/>
@@ -1884,11 +1884,11 @@ July 9, 2022</text>
 <instance part="GND13" gate="1" x="104.14" y="48.26" smashed="yes">
 <attribute name="VALUE" x="104.14" y="48.006" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="U$2" gate="G$1" x="71.12" y="147.32" smashed="yes">
+<instance part="C11" gate="G$1" x="71.12" y="147.32" smashed="yes">
 <attribute name="NAME" x="72.263" y="148.2626" size="1.778" layer="95"/>
 <attribute name="VALUE" x="72.263" y="142.7226" size="1.778" layer="96"/>
 </instance>
-<instance part="R1" gate="G$1" x="33.02" y="162.56" smashed="yes"/>
+<instance part="U2" gate="G$1" x="33.02" y="162.56" smashed="yes"/>
 <instance part="R2" gate="G$1" x="53.34" y="152.4" smashed="yes" rot="R270">
 <attribute name="NAME" x="54.61" y="153.67" size="1.016" layer="95" rot="MR180"/>
 <attribute name="VALUE" x="54.61" y="151.13" size="1.016" layer="96"/>
@@ -1958,11 +1958,11 @@ July 9, 2022</text>
 <instance part="GND7" gate="1" x="104.14" y="119.38" smashed="yes">
 <attribute name="VALUE" x="104.14" y="119.126" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="U$3" gate="G$1" x="193.04" y="144.78" smashed="yes">
+<instance part="C13" gate="G$1" x="193.04" y="144.78" smashed="yes">
 <attribute name="NAME" x="194.183" y="145.7226" size="1.778" layer="95"/>
 <attribute name="VALUE" x="194.183" y="140.1826" size="1.778" layer="96"/>
 </instance>
-<instance part="R23" gate="G$1" x="154.94" y="160.02" smashed="yes"/>
+<instance part="U4" gate="G$1" x="154.94" y="160.02" smashed="yes"/>
 <instance part="R24" gate="G$1" x="175.26" y="149.86" smashed="yes" rot="R270">
 <attribute name="NAME" x="176.53" y="151.13" size="1.016" layer="95" rot="MR180"/>
 <attribute name="VALUE" x="176.53" y="148.59" size="1.016" layer="96"/>
@@ -2032,11 +2032,11 @@ July 9, 2022</text>
 <instance part="GND19" gate="1" x="226.06" y="116.84" smashed="yes">
 <attribute name="VALUE" x="226.06" y="116.586" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="U$4" gate="G$1" x="193.04" y="76.2" smashed="yes">
+<instance part="C14" gate="G$1" x="193.04" y="76.2" smashed="yes">
 <attribute name="NAME" x="194.183" y="77.1426" size="1.778" layer="95"/>
 <attribute name="VALUE" x="194.183" y="71.6026" size="1.778" layer="96"/>
 </instance>
-<instance part="R32" gate="G$1" x="154.94" y="91.44" smashed="yes"/>
+<instance part="U5" gate="G$1" x="154.94" y="91.44" smashed="yes"/>
 <instance part="R33" gate="G$1" x="175.26" y="81.28" smashed="yes" rot="R270">
 <attribute name="NAME" x="176.53" y="82.55" size="1.016" layer="95" rot="MR180"/>
 <attribute name="VALUE" x="176.53" y="80.01" size="1.016" layer="96"/>
@@ -2114,7 +2114,7 @@ July 9, 2022</text>
 <segment>
 <wire x1="7.62" y1="88.9" x2="7.62" y2="96.52" width="0.1524" layer="91"/>
 <pinref part="P+3" gate="1" pin="V+"/>
-<pinref part="R14" gate="G$1" pin="INPUT"/>
+<pinref part="U3" gate="G$1" pin="INPUT"/>
 <wire x1="7.62" y1="88.9" x2="15.24" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="C5" gate="G$1" pin="2"/>
 <wire x1="15.24" y1="88.9" x2="17.78" y2="88.9" width="0.1524" layer="91"/>
@@ -2124,7 +2124,7 @@ July 9, 2022</text>
 <segment>
 <wire x1="7.62" y1="160.02" x2="7.62" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="P+1" gate="1" pin="V+"/>
-<pinref part="R1" gate="G$1" pin="INPUT"/>
+<pinref part="U2" gate="G$1" pin="INPUT"/>
 <wire x1="7.62" y1="160.02" x2="15.24" y2="160.02" width="0.1524" layer="91"/>
 <pinref part="C3" gate="G$1" pin="2"/>
 <wire x1="15.24" y1="160.02" x2="17.78" y2="160.02" width="0.1524" layer="91"/>
@@ -2134,7 +2134,7 @@ July 9, 2022</text>
 <segment>
 <wire x1="129.54" y1="157.48" x2="129.54" y2="165.1" width="0.1524" layer="91"/>
 <pinref part="P+4" gate="1" pin="V+"/>
-<pinref part="R23" gate="G$1" pin="INPUT"/>
+<pinref part="U4" gate="G$1" pin="INPUT"/>
 <wire x1="129.54" y1="157.48" x2="137.16" y2="157.48" width="0.1524" layer="91"/>
 <pinref part="C7" gate="G$1" pin="2"/>
 <wire x1="137.16" y1="157.48" x2="139.7" y2="157.48" width="0.1524" layer="91"/>
@@ -2144,7 +2144,7 @@ July 9, 2022</text>
 <segment>
 <wire x1="129.54" y1="88.9" x2="129.54" y2="96.52" width="0.1524" layer="91"/>
 <pinref part="P+5" gate="1" pin="V+"/>
-<pinref part="R32" gate="G$1" pin="INPUT"/>
+<pinref part="U5" gate="G$1" pin="INPUT"/>
 <wire x1="129.54" y1="88.9" x2="137.16" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="C9" gate="G$1" pin="2"/>
 <wire x1="137.16" y1="88.9" x2="139.7" y2="88.9" width="0.1524" layer="91"/>
@@ -2154,7 +2154,7 @@ July 9, 2022</text>
 </net>
 <net name="GND" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="-"/>
+<pinref part="C12" gate="G$1" pin="-"/>
 <wire x1="71.12" y1="71.2" x2="71.12" y2="50.8" width="0.1524" layer="91"/>
 <pinref part="GND9" gate="1" pin="GND"/>
 </segment>
@@ -2184,7 +2184,7 @@ July 9, 2022</text>
 <pinref part="GND13" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="U$2" gate="G$1" pin="-"/>
+<pinref part="C11" gate="G$1" pin="-"/>
 <wire x1="71.12" y1="142.32" x2="71.12" y2="121.92" width="0.1524" layer="91"/>
 <pinref part="GND3" gate="1" pin="GND"/>
 </segment>
@@ -2214,7 +2214,7 @@ July 9, 2022</text>
 <pinref part="GND7" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="U$3" gate="G$1" pin="-"/>
+<pinref part="C13" gate="G$1" pin="-"/>
 <wire x1="193.04" y1="139.78" x2="193.04" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="GND15" gate="1" pin="GND"/>
 </segment>
@@ -2244,7 +2244,7 @@ July 9, 2022</text>
 <pinref part="GND19" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="U$4" gate="G$1" pin="-"/>
+<pinref part="C14" gate="G$1" pin="-"/>
 <wire x1="193.04" y1="71.2" x2="193.04" y2="50.8" width="0.1524" layer="91"/>
 <pinref part="GND21" gate="1" pin="GND"/>
 </segment>
@@ -2287,9 +2287,9 @@ July 9, 2022</text>
 </net>
 <net name="OUT2" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="+"/>
+<pinref part="C12" gate="G$1" pin="+"/>
 <wire x1="71.12" y1="88.9" x2="71.12" y2="79.2" width="0.1524" layer="91"/>
-<pinref part="R14" gate="G$1" pin="OUTPUT"/>
+<pinref part="U3" gate="G$1" pin="OUTPUT"/>
 <wire x1="48.26" y1="88.9" x2="53.34" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="C6" gate="G$1" pin="2"/>
 <wire x1="53.34" y1="88.9" x2="63.5" y2="88.9" width="0.1524" layer="91"/>
@@ -2332,7 +2332,7 @@ July 9, 2022</text>
 <segment>
 <pinref part="R16" gate="G$1" pin="2"/>
 <wire x1="53.34" y1="71.12" x2="53.34" y2="68.58" width="0.1524" layer="91"/>
-<pinref part="R14" gate="G$1" pin="ADJ_GND"/>
+<pinref part="U3" gate="G$1" pin="ADJ_GND"/>
 <wire x1="53.34" y1="68.58" x2="33.02" y2="68.58" width="0.1524" layer="91"/>
 <wire x1="33.02" y1="68.58" x2="33.02" y2="78.74" width="0.1524" layer="91"/>
 <pinref part="R17" gate="G$1" pin="1"/>
@@ -2356,9 +2356,9 @@ July 9, 2022</text>
 </net>
 <net name="OUT1" class="0">
 <segment>
-<pinref part="U$2" gate="G$1" pin="+"/>
+<pinref part="C11" gate="G$1" pin="+"/>
 <wire x1="71.12" y1="160.02" x2="71.12" y2="150.32" width="0.1524" layer="91"/>
-<pinref part="R1" gate="G$1" pin="OUTPUT"/>
+<pinref part="U2" gate="G$1" pin="OUTPUT"/>
 <wire x1="48.26" y1="160.02" x2="53.34" y2="160.02" width="0.1524" layer="91"/>
 <pinref part="C4" gate="G$1" pin="2"/>
 <wire x1="53.34" y1="160.02" x2="63.5" y2="160.02" width="0.1524" layer="91"/>
@@ -2401,7 +2401,7 @@ July 9, 2022</text>
 <segment>
 <pinref part="R3" gate="G$1" pin="2"/>
 <wire x1="53.34" y1="142.24" x2="53.34" y2="139.7" width="0.1524" layer="91"/>
-<pinref part="R1" gate="G$1" pin="ADJ_GND"/>
+<pinref part="U2" gate="G$1" pin="ADJ_GND"/>
 <wire x1="53.34" y1="139.7" x2="33.02" y2="139.7" width="0.1524" layer="91"/>
 <wire x1="33.02" y1="139.7" x2="33.02" y2="149.86" width="0.1524" layer="91"/>
 <pinref part="R4" gate="G$1" pin="1"/>
@@ -2452,7 +2452,7 @@ July 9, 2022</text>
 <segment>
 <pinref part="R25" gate="G$1" pin="2"/>
 <wire x1="175.26" y1="139.7" x2="175.26" y2="137.16" width="0.1524" layer="91"/>
-<pinref part="R23" gate="G$1" pin="ADJ_GND"/>
+<pinref part="U4" gate="G$1" pin="ADJ_GND"/>
 <wire x1="175.26" y1="137.16" x2="154.94" y2="137.16" width="0.1524" layer="91"/>
 <wire x1="154.94" y1="137.16" x2="154.94" y2="147.32" width="0.1524" layer="91"/>
 <pinref part="R26" gate="G$1" pin="1"/>
@@ -2476,9 +2476,9 @@ July 9, 2022</text>
 </net>
 <net name="OUT3" class="0">
 <segment>
-<pinref part="U$3" gate="G$1" pin="+"/>
+<pinref part="C13" gate="G$1" pin="+"/>
 <wire x1="193.04" y1="157.48" x2="193.04" y2="147.78" width="0.1524" layer="91"/>
-<pinref part="R23" gate="G$1" pin="OUTPUT"/>
+<pinref part="U4" gate="G$1" pin="OUTPUT"/>
 <wire x1="170.18" y1="157.48" x2="175.26" y2="157.48" width="0.1524" layer="91"/>
 <pinref part="C8" gate="G$1" pin="2"/>
 <wire x1="175.26" y1="157.48" x2="185.42" y2="157.48" width="0.1524" layer="91"/>
@@ -2532,7 +2532,7 @@ July 9, 2022</text>
 <segment>
 <pinref part="R34" gate="G$1" pin="2"/>
 <wire x1="175.26" y1="71.12" x2="175.26" y2="68.58" width="0.1524" layer="91"/>
-<pinref part="R32" gate="G$1" pin="ADJ_GND"/>
+<pinref part="U5" gate="G$1" pin="ADJ_GND"/>
 <wire x1="175.26" y1="68.58" x2="154.94" y2="68.58" width="0.1524" layer="91"/>
 <wire x1="154.94" y1="68.58" x2="154.94" y2="78.74" width="0.1524" layer="91"/>
 <pinref part="R35" gate="G$1" pin="1"/>
@@ -2556,9 +2556,9 @@ July 9, 2022</text>
 </net>
 <net name="OUT4" class="0">
 <segment>
-<pinref part="U$4" gate="G$1" pin="+"/>
+<pinref part="C14" gate="G$1" pin="+"/>
 <wire x1="193.04" y1="88.9" x2="193.04" y2="79.2" width="0.1524" layer="91"/>
-<pinref part="R32" gate="G$1" pin="OUTPUT"/>
+<pinref part="U5" gate="G$1" pin="OUTPUT"/>
 <wire x1="170.18" y1="88.9" x2="175.26" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="C10" gate="G$1" pin="2"/>
 <wire x1="175.26" y1="88.9" x2="185.42" y2="88.9" width="0.1524" layer="91"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.6.2">
+<eagle version="9.5.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -4820,12 +4820,12 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="J11" library="Hippo-PS" deviceset="CONN_06" device=""/>
 <part name="R1" library="standardparts" deviceset="RESISTOR" device=".1206" value="330"/>
 <part name="R2" library="standardparts" deviceset="RESISTOR" device=".1206" value="2K"/>
-<part name="D1" library="standardparts" deviceset="LED" device=".1206" value="GREEN"/>
+<part name="D1" library="standardparts" deviceset="LED" device=".1206" value="BLUE"/>
 <part name="D2" library="standardparts" deviceset="LED" device=".1206" value="GREEN"/>
 <part name="D3" library="standardparts" deviceset="LED" device=".1206" value="GREEN"/>
 <part name="D4" library="standardparts" deviceset="LED" device=".1206" value="GREEN"/>
 <part name="D5" library="standardparts" deviceset="LED" device=".1206" value="GREEN"/>
-<part name="D6" library="standardparts" deviceset="LED" device=".1206" value="BLUE"/>
+<part name="D6" library="standardparts" deviceset="LED" device=".1206" value="GREEN"/>
 <part name="R3" library="standardparts" deviceset="RESISTOR" device=".1206" value="150"/>
 <part name="R4" library="standardparts" deviceset="RESISTOR" device=".1206" value="150"/>
 <part name="R5" library="standardparts" deviceset="RESISTOR" device=".1206" value="150"/>
@@ -4840,14 +4840,14 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="GND9" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND10" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND17" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="D9" library="standardparts" deviceset="LED" device=".1206" value="GREEN"/>
-<part name="D10" library="standardparts" deviceset="LED" device=".1206" value="GREEN"/>
+<part name="D9" library="standardparts" deviceset="LED" device=".1206" value="BLUE"/>
+<part name="D10" library="standardparts" deviceset="LED" device=".1206" value="BLUE"/>
 <part name="D11" library="standardparts" deviceset="LED" device=".1206" value="BLUE"/>
 <part name="R9" library="standardparts" deviceset="RESISTOR" device=".1206" value="150"/>
 <part name="R10" library="standardparts" deviceset="RESISTOR" device=".1206" value="150"/>
 <part name="R11" library="standardparts" deviceset="RESISTOR" device=".1206" value="150"/>
-<part name="U$1" library="Hippo-PS" deviceset="TEENSY_3.5/3.6" device=""/>
-<part name="U$2" library="Hippo-PS" deviceset="TINYSCREEN" device=""/>
+<part name="U1" library="Hippo-PS" deviceset="TEENSY_3.5/3.6" device=""/>
+<part name="U2" library="Hippo-PS" deviceset="TINYSCREEN" device=""/>
 <part name="S1" library="Hippo-PS" deviceset="TACTILE_BUTTON" device=""/>
 <part name="R13" library="standardparts" deviceset="RESISTOR" device=".1206" value="1K"/>
 <part name="C1" library="standardparts" deviceset="CAPACITOR" device=".1206" value="0.1uF"/>
@@ -5023,8 +5023,8 @@ July 22, 2022</text>
 <attribute name="NAME" x="31.75" y="16.51" size="1.016" layer="95" rot="MR90"/>
 <attribute name="VALUE" x="34.29" y="16.51" size="1.016" layer="96" rot="R90"/>
 </instance>
-<instance part="U$1" gate="G$1" x="71.12" y="152.4" smashed="yes"/>
-<instance part="U$2" gate="G$1" x="226.06" y="99.06" smashed="yes" rot="R180"/>
+<instance part="U1" gate="G$1" x="71.12" y="152.4" smashed="yes"/>
+<instance part="U2" gate="G$1" x="226.06" y="99.06" smashed="yes" rot="R180"/>
 <instance part="S1" gate="G$1" x="162.56" y="114.3" smashed="yes">
 <attribute name="NAME" x="160.02" y="116.84" size="1.27" layer="95"/>
 <attribute name="VALUE" x="160.02" y="111.76" size="1.27" layer="96" align="top-left"/>
@@ -5151,7 +5151,7 @@ July 22, 2022</text>
 <label x="177.8" y="114.3" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="24"/>
+<pinref part="U1" gate="G$1" pin="24"/>
 <label x="45.72" y="127" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="16"/>
 <wire x1="50.8" y1="127" x2="5.08" y2="127" width="0.1524" layer="91"/>
@@ -5170,7 +5170,7 @@ July 22, 2022</text>
 <pinref part="GND1" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="U$2" gate="G$1" pin="GND"/>
+<pinref part="U2" gate="G$1" pin="GND"/>
 <wire x1="231.14" y1="104.14" x2="231.14" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="231.14" y1="106.68" x2="238.76" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="238.76" y1="106.68" x2="238.76" y2="88.9" width="0.1524" layer="91"/>
@@ -5248,7 +5248,7 @@ July 22, 2022</text>
 <wire x1="104.14" y1="15.24" x2="104.14" y2="10.16" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="GND"/>
+<pinref part="U1" gate="G$1" pin="GND"/>
 <wire x1="50.8" y1="165.1" x2="30.48" y2="165.1" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="165.1" x2="30.48" y2="162.56" width="0.1524" layer="91"/>
 <pinref part="GND19" gate="1" pin="GND"/>
@@ -5259,7 +5259,7 @@ July 22, 2022</text>
 <segment>
 <pinref part="GND20" gate="1" pin="GND"/>
 <wire x1="119.38" y1="129.54" x2="119.38" y2="127" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="GND2"/>
+<pinref part="U1" gate="G$1" pin="GND2"/>
 <wire x1="91.44" y1="129.54" x2="119.38" y2="129.54" width="0.1524" layer="91"/>
 <pinref part="J13" gate="G$1" pin="15"/>
 <wire x1="119.38" y1="129.54" x2="127" y2="129.54" width="0.1524" layer="91"/>
@@ -5279,7 +5279,7 @@ July 22, 2022</text>
 </net>
 <net name="+5V" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="VIN"/>
+<pinref part="U1" gate="G$1" pin="VIN"/>
 <label x="99.06" y="165.1" size="1.778" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="1"/>
 <wire x1="127" y1="165.1" x2="91.44" y2="165.1" width="0.1524" layer="91"/>
@@ -5289,7 +5289,7 @@ July 22, 2022</text>
 <segment>
 <pinref part="SUPPLY2" gate="1" pin="V+"/>
 <wire x1="30.48" y1="129.54" x2="30.48" y2="134.62" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="3V3"/>
+<pinref part="U1" gate="G$1" pin="3V3"/>
 <wire x1="50.8" y1="129.54" x2="30.48" y2="129.54" width="0.1524" layer="91"/>
 <pinref part="J14" gate="G$1" pin="15"/>
 <wire x1="30.48" y1="129.54" x2="5.08" y2="129.54" width="0.1524" layer="91"/>
@@ -5297,7 +5297,7 @@ July 22, 2022</text>
 </segment>
 <segment>
 <pinref part="SUPPLY3" gate="1" pin="V+"/>
-<pinref part="U$2" gate="G$1" pin="VCC"/>
+<pinref part="U2" gate="G$1" pin="VCC"/>
 <wire x1="226.06" y1="121.92" x2="226.06" y2="104.14" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -5337,7 +5337,7 @@ July 22, 2022</text>
 </net>
 <net name="N$1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="VBAT"/>
+<pinref part="U1" gate="G$1" pin="VBAT"/>
 <wire x1="66.04" y1="88.9" x2="66.04" y2="81.28" width="0.1524" layer="91"/>
 <pinref part="BT1" gate="G$1" pin="+"/>
 <wire x1="66.04" y1="81.28" x2="68.58" y2="81.28" width="0.1524" layer="91"/>
@@ -5423,7 +5423,7 @@ July 22, 2022</text>
 <label x="177.8" y="66.04" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="25"/>
+<pinref part="U1" gate="G$1" pin="25"/>
 <label x="45.72" y="124.46" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="17"/>
 <wire x1="50.8" y1="124.46" x2="5.08" y2="124.46" width="0.1524" layer="91"/>
@@ -5446,7 +5446,7 @@ July 22, 2022</text>
 <label x="228.6" y="66.04" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="26"/>
+<pinref part="U1" gate="G$1" pin="26"/>
 <wire x1="50.8" y1="121.92" x2="45.72" y2="121.92" width="0.1524" layer="91"/>
 <label x="45.72" y="121.92" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -5490,7 +5490,7 @@ July 22, 2022</text>
 <label x="83.82" y="30.48" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="11/MOSI"/>
+<pinref part="U1" gate="G$1" pin="11/MOSI"/>
 <label x="45.72" y="134.62" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="13"/>
 <wire x1="50.8" y1="134.62" x2="5.08" y2="134.62" width="0.1524" layer="91"/>
@@ -5498,13 +5498,13 @@ July 22, 2022</text>
 </net>
 <net name="SCL" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="19/A5/SCL"/>
+<pinref part="U1" gate="G$1" pin="19/A5/SCL"/>
 <label x="96.52" y="147.32" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="8"/>
 <wire x1="91.44" y1="147.32" x2="127" y2="147.32" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U$2" gate="G$1" pin="SCL"/>
+<pinref part="U2" gate="G$1" pin="SCL"/>
 <wire x1="220.98" y1="104.14" x2="220.98" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="220.98" y1="106.68" x2="208.28" y2="106.68" width="0.1524" layer="91"/>
 <label x="208.28" y="106.68" size="1.778" layer="95" rot="R180" xref="yes"/>
@@ -5515,14 +5515,14 @@ July 22, 2022</text>
 </net>
 <net name="SDA" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="18/A4/SDA"/>
+<pinref part="U1" gate="G$1" pin="18/A4/SDA"/>
 <label x="96.52" y="144.78" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="9"/>
 <wire x1="91.44" y1="144.78" x2="127" y2="144.78" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="208.28" y1="111.76" x2="215.9" y2="111.76" width="0.1524" layer="91"/>
-<pinref part="U$2" gate="G$1" pin="SDA"/>
+<pinref part="U2" gate="G$1" pin="SDA"/>
 <wire x1="215.9" y1="111.76" x2="215.9" y2="104.14" width="0.1524" layer="91"/>
 <label x="208.28" y="111.76" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="R16" gate="G$1" pin="2"/>
@@ -5532,7 +5532,7 @@ July 22, 2022</text>
 </net>
 <net name="LED" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="13/SCK"/>
+<pinref part="U1" gate="G$1" pin="13/SCK"/>
 <label x="96.52" y="132.08" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="14"/>
 <wire x1="91.44" y1="132.08" x2="127" y2="132.08" width="0.1524" layer="91"/>
@@ -5540,7 +5540,7 @@ July 22, 2022</text>
 </net>
 <net name="S06_SIGSMPS" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="A22/DAC1"/>
+<pinref part="U1" gate="G$1" pin="A22/DAC1"/>
 <label x="96.52" y="127" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="16"/>
 <wire x1="127" y1="127" x2="91.44" y2="127" width="0.1524" layer="91"/>
@@ -5548,7 +5548,7 @@ July 22, 2022</text>
 </net>
 <net name="S06_SIG1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="A21/DAC0"/>
+<pinref part="U1" gate="G$1" pin="A21/DAC0"/>
 <label x="96.52" y="124.46" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="17"/>
 <wire x1="91.44" y1="124.46" x2="127" y2="124.46" width="0.1524" layer="91"/>
@@ -5556,7 +5556,7 @@ July 22, 2022</text>
 </net>
 <net name="SDA1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="38/A19"/>
+<pinref part="U1" gate="G$1" pin="38/A19"/>
 <wire x1="91.44" y1="119.38" x2="96.52" y2="119.38" width="0.1524" layer="91"/>
 <label x="96.52" y="119.38" size="1.27" layer="95" xref="yes"/>
 </segment>
@@ -5568,7 +5568,7 @@ July 22, 2022</text>
 </net>
 <net name="SCL1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="37/A18"/>
+<pinref part="U1" gate="G$1" pin="37/A18"/>
 <wire x1="91.44" y1="116.84" x2="96.52" y2="116.84" width="0.1524" layer="91"/>
 <label x="96.52" y="116.84" size="1.27" layer="95" xref="yes"/>
 </segment>
@@ -5580,7 +5580,7 @@ July 22, 2022</text>
 </net>
 <net name="LED_S03B" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="30"/>
+<pinref part="U1" gate="G$1" pin="30"/>
 <label x="45.72" y="111.76" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J9" gate="G$1" pin="2"/>
 <wire x1="50.8" y1="111.76" x2="5.08" y2="111.76" width="0.1524" layer="91"/>
@@ -5593,7 +5593,7 @@ July 22, 2022</text>
 </net>
 <net name="LED_S03A" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="29"/>
+<pinref part="U1" gate="G$1" pin="29"/>
 <label x="45.72" y="114.3" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J9" gate="G$1" pin="1"/>
 <wire x1="50.8" y1="114.3" x2="5.08" y2="114.3" width="0.1524" layer="91"/>
@@ -5606,14 +5606,14 @@ July 22, 2022</text>
 </net>
 <net name="FREE3" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="28"/>
+<pinref part="U1" gate="G$1" pin="28"/>
 <wire x1="50.8" y1="116.84" x2="45.72" y2="116.84" width="0.1524" layer="91"/>
 <label x="45.72" y="116.84" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="FREE2" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="27"/>
+<pinref part="U1" gate="G$1" pin="27"/>
 <wire x1="50.8" y1="119.38" x2="45.72" y2="119.38" width="0.1524" layer="91"/>
 <label x="45.72" y="119.38" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -5625,7 +5625,7 @@ July 22, 2022</text>
 </net>
 <net name="FREE1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="12/MISO"/>
+<pinref part="U1" gate="G$1" pin="12/MISO"/>
 <label x="45.72" y="132.08" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="14"/>
 <wire x1="50.8" y1="132.08" x2="5.08" y2="132.08" width="0.1524" layer="91"/>
@@ -5638,7 +5638,7 @@ July 22, 2022</text>
 </net>
 <net name="LED_S03D" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="10/CS"/>
+<pinref part="U1" gate="G$1" pin="10/CS"/>
 <label x="45.72" y="137.16" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="12"/>
 <wire x1="50.8" y1="137.16" x2="5.08" y2="137.16" width="0.1524" layer="91"/>
@@ -5651,7 +5651,7 @@ July 22, 2022</text>
 </net>
 <net name="LED_S06" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="9/CS"/>
+<pinref part="U1" gate="G$1" pin="9/CS"/>
 <label x="45.72" y="139.7" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="11"/>
 <wire x1="50.8" y1="139.7" x2="5.08" y2="139.7" width="0.1524" layer="91"/>
@@ -5664,7 +5664,7 @@ July 22, 2022</text>
 </net>
 <net name="LED_S05" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="8"/>
+<pinref part="U1" gate="G$1" pin="8"/>
 <label x="45.72" y="142.24" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="10"/>
 <wire x1="50.8" y1="142.24" x2="5.08" y2="142.24" width="0.1524" layer="91"/>
@@ -5677,7 +5677,7 @@ July 22, 2022</text>
 </net>
 <net name="LED_S04" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="7"/>
+<pinref part="U1" gate="G$1" pin="7"/>
 <label x="45.72" y="144.78" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="9"/>
 <wire x1="50.8" y1="144.78" x2="5.08" y2="144.78" width="0.1524" layer="91"/>
@@ -5690,7 +5690,7 @@ July 22, 2022</text>
 </net>
 <net name="LED_S03" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="6"/>
+<pinref part="U1" gate="G$1" pin="6"/>
 <label x="45.72" y="147.32" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="8"/>
 <wire x1="50.8" y1="147.32" x2="5.08" y2="147.32" width="0.1524" layer="91"/>
@@ -5703,7 +5703,7 @@ July 22, 2022</text>
 </net>
 <net name="LED_S01" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="5"/>
+<pinref part="U1" gate="G$1" pin="5"/>
 <label x="45.72" y="149.86" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="7"/>
 <wire x1="50.8" y1="149.86" x2="5.08" y2="149.86" width="0.1524" layer="91"/>
@@ -5716,7 +5716,7 @@ July 22, 2022</text>
 </net>
 <net name="SDA2" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="4/CANRX"/>
+<pinref part="U1" gate="G$1" pin="4/CANRX"/>
 <label x="45.72" y="152.4" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="6"/>
 <wire x1="50.8" y1="152.4" x2="5.08" y2="152.4" width="0.1524" layer="91"/>
@@ -5724,7 +5724,7 @@ July 22, 2022</text>
 </net>
 <net name="SCL2" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="3/CANTX"/>
+<pinref part="U1" gate="G$1" pin="3/CANTX"/>
 <label x="45.72" y="154.94" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="5"/>
 <wire x1="50.8" y1="154.94" x2="5.08" y2="154.94" width="0.1524" layer="91"/>
@@ -5732,7 +5732,7 @@ July 22, 2022</text>
 </net>
 <net name="LED_S03C" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="2"/>
+<pinref part="U1" gate="G$1" pin="2"/>
 <label x="45.72" y="157.48" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="4"/>
 <wire x1="50.8" y1="157.48" x2="5.08" y2="157.48" width="0.1524" layer="91"/>
@@ -5745,7 +5745,7 @@ July 22, 2022</text>
 </net>
 <net name="TX1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="1/TX"/>
+<pinref part="U1" gate="G$1" pin="1/TX"/>
 <label x="45.72" y="160.02" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="3"/>
 <wire x1="50.8" y1="160.02" x2="5.08" y2="160.02" width="0.1524" layer="91"/>
@@ -5758,7 +5758,7 @@ July 22, 2022</text>
 </net>
 <net name="RX1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="0/RX"/>
+<pinref part="U1" gate="G$1" pin="0/RX"/>
 <label x="45.72" y="162.56" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J14" gate="G$1" pin="2"/>
 <wire x1="50.8" y1="162.56" x2="5.08" y2="162.56" width="0.1524" layer="91"/>
@@ -5771,7 +5771,7 @@ July 22, 2022</text>
 </net>
 <net name="S05_SIGSMPS" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="23/A9"/>
+<pinref part="U1" gate="G$1" pin="23/A9"/>
 <label x="96.52" y="157.48" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="4"/>
 <wire x1="91.44" y1="157.48" x2="127" y2="157.48" width="0.1524" layer="91"/>
@@ -5779,7 +5779,7 @@ July 22, 2022</text>
 </net>
 <net name="S05_SIG1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="22/A8"/>
+<pinref part="U1" gate="G$1" pin="22/A8"/>
 <label x="96.52" y="154.94" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="5"/>
 <wire x1="91.44" y1="154.94" x2="127" y2="154.94" width="0.1524" layer="91"/>
@@ -5787,7 +5787,7 @@ July 22, 2022</text>
 </net>
 <net name="S05_SIG2" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="21/A7"/>
+<pinref part="U1" gate="G$1" pin="21/A7"/>
 <label x="96.52" y="152.4" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="6"/>
 <wire x1="91.44" y1="152.4" x2="127" y2="152.4" width="0.1524" layer="91"/>
@@ -5795,7 +5795,7 @@ July 22, 2022</text>
 </net>
 <net name="S05_SIGNP" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="20/A6"/>
+<pinref part="U1" gate="G$1" pin="20/A6"/>
 <label x="96.52" y="149.86" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="7"/>
 <wire x1="91.44" y1="149.86" x2="127" y2="149.86" width="0.1524" layer="91"/>
@@ -5803,7 +5803,7 @@ July 22, 2022</text>
 </net>
 <net name="S04_SIGSMPS" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="17/A3"/>
+<pinref part="U1" gate="G$1" pin="17/A3"/>
 <label x="96.52" y="142.24" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="10"/>
 <wire x1="91.44" y1="142.24" x2="127" y2="142.24" width="0.1524" layer="91"/>
@@ -5811,7 +5811,7 @@ July 22, 2022</text>
 </net>
 <net name="S04_SIG3" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="16/A2"/>
+<pinref part="U1" gate="G$1" pin="16/A2"/>
 <label x="96.52" y="139.7" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="11"/>
 <wire x1="91.44" y1="139.7" x2="127" y2="139.7" width="0.1524" layer="91"/>
@@ -5819,7 +5819,7 @@ July 22, 2022</text>
 </net>
 <net name="S04_SIG2" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="15/A1"/>
+<pinref part="U1" gate="G$1" pin="15/A1"/>
 <label x="96.52" y="137.16" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="12"/>
 <wire x1="91.44" y1="137.16" x2="127" y2="137.16" width="0.1524" layer="91"/>
@@ -5827,7 +5827,7 @@ July 22, 2022</text>
 </net>
 <net name="S04_SIG1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="14/A0"/>
+<pinref part="U1" gate="G$1" pin="14/A0"/>
 <label x="96.52" y="134.62" size="1.27" layer="95" xref="yes"/>
 <pinref part="J13" gate="G$1" pin="13"/>
 <wire x1="91.44" y1="134.62" x2="127" y2="134.62" width="0.1524" layer="91"/>
@@ -5835,14 +5835,14 @@ July 22, 2022</text>
 </net>
 <net name="S03_SIG1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="39/A20"/>
+<pinref part="U1" gate="G$1" pin="39/A20"/>
 <wire x1="91.44" y1="121.92" x2="96.52" y2="121.92" width="0.1524" layer="91"/>
 <label x="96.52" y="121.92" size="1.27" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="S03_SIGSMPS" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="36/A17"/>
+<pinref part="U1" gate="G$1" pin="36/A17"/>
 <label x="96.52" y="114.3" size="1.27" layer="95" xref="yes"/>
 <pinref part="J10" gate="G$1" pin="1"/>
 <wire x1="91.44" y1="114.3" x2="127" y2="114.3" width="0.1524" layer="91"/>
@@ -5850,7 +5850,7 @@ July 22, 2022</text>
 </net>
 <net name="S03_SIG2" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="35/A16"/>
+<pinref part="U1" gate="G$1" pin="35/A16"/>
 <label x="96.52" y="111.76" size="1.27" layer="95" xref="yes"/>
 <pinref part="J10" gate="G$1" pin="2"/>
 <wire x1="91.44" y1="111.76" x2="127" y2="111.76" width="0.1524" layer="91"/>
@@ -5858,7 +5858,7 @@ July 22, 2022</text>
 </net>
 <net name="S03_SIG3" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="34/A15"/>
+<pinref part="U1" gate="G$1" pin="34/A15"/>
 <label x="96.52" y="109.22" size="1.27" layer="95" xref="yes"/>
 <pinref part="J10" gate="G$1" pin="3"/>
 <wire x1="91.44" y1="109.22" x2="127" y2="109.22" width="0.1524" layer="91"/>
@@ -5866,7 +5866,7 @@ July 22, 2022</text>
 </net>
 <net name="S03_SIG4" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="33/A14"/>
+<pinref part="U1" gate="G$1" pin="33/A14"/>
 <label x="96.52" y="106.68" size="1.27" layer="95" xref="yes"/>
 <pinref part="J10" gate="G$1" pin="4"/>
 <wire x1="91.44" y1="106.68" x2="127" y2="106.68" width="0.1524" layer="91"/>
@@ -5874,7 +5874,7 @@ July 22, 2022</text>
 </net>
 <net name="+5V_SIG" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="31/A12"/>
+<pinref part="U1" gate="G$1" pin="31/A12"/>
 <label x="45.72" y="109.22" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J9" gate="G$1" pin="3"/>
 <wire x1="50.8" y1="109.22" x2="5.08" y2="109.22" width="0.1524" layer="91"/>
@@ -5882,7 +5882,7 @@ July 22, 2022</text>
 </net>
 <net name="IN+_SIG" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="32/A13"/>
+<pinref part="U1" gate="G$1" pin="32/A13"/>
 <label x="45.72" y="106.68" size="1.27" layer="95" rot="R180" xref="yes"/>
 <pinref part="J9" gate="G$1" pin="4"/>
 <wire x1="50.8" y1="106.68" x2="5.08" y2="106.68" width="0.1524" layer="91"/>
@@ -5890,14 +5890,14 @@ July 22, 2022</text>
 </net>
 <net name="N$4" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="AGND"/>
+<pinref part="U1" gate="G$1" pin="AGND"/>
 <pinref part="J13" gate="G$1" pin="2"/>
 <wire x1="91.44" y1="162.56" x2="127" y2="162.56" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$14" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="3V3_LO"/>
+<pinref part="U1" gate="G$1" pin="3V3_LO"/>
 <pinref part="J13" gate="G$1" pin="3"/>
 <wire x1="91.44" y1="160.02" x2="127" y2="160.02" width="0.1524" layer="91"/>
 </segment>
