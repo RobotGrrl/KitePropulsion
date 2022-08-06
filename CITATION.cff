@@ -1,0 +1,15 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Atmosphinder - Kite Propulsion Exploration Rover
+message: >-
+  Please cite this robot (software / electronics /
+  design / firmware) using these metadata.
+type: robot
+authors:
+  - given-names: Erin
+    family-names: Kennedy
+    email: hello@robotmissions.org
+    affiliation: Robot Missions Inc
+    orcid: https://orcid.org/0000-0001-6644-3507
